@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "My Records My Health",
+    "slug": "myrecords-emergency",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myrecordsmyhealth",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0F2640"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.myrecordsmyhealth.app",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to photograph medical documents such as DNR orders, organ donor cards, and prescriptions.",
+        "NSPhotoLibraryUsageDescription": "This app accesses your photo library to import medical document images.",
+        "NSLocationWhenInUseUsageDescription": "This app uses your location to include approximate location in emergency texts when Emergency View is activated.",
+        "CFBundleDisplayName": "MyRecordsMyHealth"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#0F2640"
+      },
+      "package": "com.myrecordsmyhealth.app",
+      "versionCode": 1
+    },
+    "web": {
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-router",
+        {
+          "origin": "https://rork.com/"
+        }
+      ],
+      "expo-font",
+      "expo-web-browser",
+      "expo-secure-store",
+      "expo-mail-composer"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

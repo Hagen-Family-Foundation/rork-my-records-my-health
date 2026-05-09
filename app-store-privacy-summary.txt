@@ -1,0 +1,33 @@
+MyRecordsMyHealth App Store Privacy Summary
+Operator: My Body Is My Health
+
+Based on the current behavior of MyRecordsMyHealth, which is operated by My Body Is My Health:
+
+1. Data collected by the developer
+- The app does not collect users’ health record data on developer-operated servers.
+- No advertising SDKs are used.
+- No analytics or tracking SDKs are used.
+- No account creation or login is required.
+
+2. Data linked to the user
+- None by the developer, based on the current app behavior.
+
+3. Tracking
+- No tracking.
+
+4. Sensitive data handling
+- Health and medical information entered by the user is stored locally on the user’s device.
+- Document images added by the user are stored locally.
+- Optional biometric authentication is used only for local device unlock and is handled by the operating system.
+- Exports are user initiated only, such as copying to clipboard or opening the email client.
+
+5. Permissions used
+- Camera: photograph medical documents and scan barcodes or QR codes
+- Photo library: import document images
+- Biometrics: optional local unlock on supported devices
+
+6. Suggested App Privacy position for Apple review
+- Data Not Collected, based on current app behavior and no developer-side collection of user health data.
+
+7. Important note
+- If future versions add accounts, cloud sync, analytics, crash reporting, customer support chat, or any server-side storage, this summary should be updated before release.

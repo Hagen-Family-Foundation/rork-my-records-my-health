@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyRecordsMyHealth Support</title>
+    <meta
+      name="description"
+      content="Support for MyRecordsMyHealth — setup help, accessibility help, privacy links, and contact information."
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #eef4f8;
+        --card: rgba(255, 255, 255, 0.94);
+        --text: #0f2640;
+        --muted: #536273;
+        --border: rgba(15, 38, 64, 0.12);
+        --accent: #0f2640;
+        --accent-2: #2a5080;
+        --accent-soft: #dbe8f3;
+        --green: #0f9d68;
+        --amber: #e08a1a;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, #f7fbff 0%, var(--bg) 42%, #e7eef4 100%);
+        color: var(--text);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a { color: var(--accent-2); }
+
+      .shell {
+        width: 100%;
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 24px 20px 64px;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 4px 24px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        letter-spacing: -0.2px;
+        color: var(--text);
+        text-decoration: none;
+      }
+
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #0f2640, #2a5080);
+        display: grid;
+        place-items: center;
+        box-shadow: 0 8px 22px rgba(15, 38, 64, 0.25);
+      }
+
+      .brand-mark svg { color: #fff; }
+      .nav-links { display: flex; gap: 22px; align-items: center; }
+      .nav-links a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 14px; opacity: 0.82; }
+      .nav-links a:hover { opacity: 1; }
+
+      .hero {
+        position: relative;
+        border-radius: 32px;
+        padding: 48px 40px;
+        background:
+          radial-gradient(1200px 300px at 80% -10%, rgba(111,213,166,0.18), transparent 60%),
+          linear-gradient(180deg, #0f2640 0%, #15314f 55%, #2a5080 100%);
+        color: #fff;
+        overflow: hidden;
+        box-shadow: 0 28px 80px rgba(15,38,64,0.22);
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          radial-gradient(circle at 10% 90%, rgba(224,138,26,0.18), transparent 40%),
+          radial-gradient(circle at 90% 20%, rgba(111,213,166,0.14), transparent 40%);
+        pointer-events: none;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.9fr;
+        gap: 28px;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      @media (max-width: 900px) {
+        .hero { padding: 36px 24px; }
+        .hero-grid { grid-template-columns: 1fr; }
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.18);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+        color: #cfe3ff;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #6fd5a6;
+        box-shadow: 0 0 10px #6fd5a6;
+      }
+
+      h1 {
+        font-size: clamp(34px, 5vw, 54px);
+        line-height: 1.05;
+        letter-spacing: -1px;
+        margin: 16px 0 14px;
+        font-weight: 800;
+      }
+
+      .hero p {
+        font-size: 18px;
+        color: rgba(255,255,255,0.84);
+        max-width: 620px;
+        margin: 0;
+      }
+
+      .cta-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 24px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 18px;
+        border-radius: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+
+      .btn:hover { transform: translateY(-1px); }
+      .btn-primary { background: #fff; color: #0f2640; box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+      .btn-secondary { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.24); }
+
+      .hero-card {
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 24px;
+        padding: 22px;
+        backdrop-filter: blur(10px);
+      }
+
+      .hero-card h2 {
+        font-size: 20px;
+        margin: 0 0 10px;
+      }
+
+      .hero-card p {
+        font-size: 14.5px;
+        color: rgba(255,255,255,0.74);
+      }
+
+      .hero-list {
+        display: grid;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .hero-list-item {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .hero-list-item strong {
+        display: block;
+        font-size: 14px;
+        color: #fff;
+      }
+
+      .hero-list-item span {
+        display: block;
+        font-size: 13px;
+        color: rgba(255,255,255,0.72);
+      }
+
+      .section {
+        margin-top: 64px;
+      }
+
+      .section-head {
+        text-align: center;
+        max-width: 760px;
+        margin: 0 auto 34px;
+      }
+
+      .section-tag {
+        display: inline-block;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        padding: 6px 12px;
+        border-radius: 999px;
+      }
+
+      .section-head h2 {
+        font-size: clamp(26px, 3.4vw, 38px);
+        margin: 10px 0 12px;
+        letter-spacing: -0.5px;
+      }
+
+      .section-head p {
+        color: var(--muted);
+        font-size: 17px;
+        margin: 0;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      @media (max-width: 920px) {
+        .grid { grid-template-columns: 1fr; }
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 24px;
+      }
+
+      .icon-wrap {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        display: grid;
+        place-items: center;
+        margin-bottom: 14px;
+      }
+
+      .card h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14.5px;
+      }
+
+      .quick-links {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+      }
+
+      @media (max-width: 760px) {
+        .quick-links { grid-template-columns: 1fr; }
+      }
+
+      .quick-card {
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 24px;
+      }
+
+      .quick-card strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 18px;
+      }
+
+      .quick-card p {
+        margin: 0 0 14px;
+        color: var(--muted);
+      }
+
+      details.faq {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 16px 20px;
+        margin-bottom: 10px;
+      }
+
+      details.faq[open] { box-shadow: 0 10px 30px rgba(15,38,64,0.08); }
+
+      details.faq summary {
+        cursor: pointer;
+        font-weight: 700;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 15.5px;
+      }
+
+      details.faq summary::-webkit-details-marker { display: none; }
+      details.faq summary::after { content: "+"; font-size: 22px; color: var(--muted); font-weight: 400; }
+      details.faq[open] summary::after { content: "–"; }
+      details.faq p { margin: 10px 0 0; color: var(--muted); font-size: 14.5px; }
+
+      .note {
+        background: linear-gradient(135deg, rgba(15,38,64,0.06), rgba(42,80,128,0.08));
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 24px;
+      }
+
+      .note h3 {
+        margin: 0 0 10px;
+        font-size: 20px;
+      }
+
+      .note p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      footer {
+        margin-top: 48px;
+        padding: 24px 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--muted);
+        font-size: 13.5px;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      footer a { color: var(--muted); text-decoration: none; margin-left: 16px; }
+      footer a:hover { color: var(--text); }
+      .ico { width: 20px; height: 20px; }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <nav class="nav">
+        <a class="brand" href="index.html">
+          <div class="brand-mark">
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </div>
+          <span>MyRecordsMyHealth</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="#contact">Contact</a>
+          <a href="#faq">FAQ</a>
+          <a href="privacy-policy.html">Privacy</a>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div class="hero-grid">
+          <div>
+            <span class="eyebrow"><span class="dot"></span> Public support and help</span>
+            <h1>Need help using MyRecordsMyHealth?</h1>
+            <p>
+              Start here for setup help, accessibility help, privacy links, and support contact
+              details. This page is public and works without signing in.
+            </p>
+            <div class="cta-row">
+              <a class="btn btn-primary" href="mailto:support@myrecordsmyhealth.com">Email support</a>
+              <a class="btn btn-secondary" href="privacy-policy.html">Read privacy policy</a>
+            </div>
+          </div>
+          <div class="hero-card">
+            <h2>Fastest ways to get help</h2>
+            <p>Use the path that best fits what you need right now.</p>
+            <div class="hero-list">
+              <div class="hero-list-item">
+                <div>📩</div>
+                <div>
+                  <strong>Support email</strong>
+                  <span>support@myrecordsmyhealth.com</span>
+                </div>
+              </div>
+              <div class="hero-list-item">
+                <div>♿</div>
+                <div>
+                  <strong>Accessibility help</strong>
+                  <span>Questions about large text, contrast, haptics, or screen readers</span>
+                </div>
+              </div>
+              <div class="hero-list-item">
+                <div>🔒</div>
+                <div>
+                  <strong>Privacy questions</strong>
+                  <span>See how the app keeps records on-device and under your control</span>
+                </div>
+              </div>
+              <div class="hero-list-item">
+                <div>🩺</div>
+                <div>
+                  <strong>Emergency-view guidance</strong>
+                  <span>Help understanding what to save so key medical details are ready fast</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="section-head">
+          <span class="section-tag">Contact Paths</span>
+          <h2>Three quick ways to get what you need</h2>
+          <p>Choose the most direct option and you will get there faster.</p>
+        </div>
+        <div class="quick-links">
+          <div class="quick-card">
+            <strong>Email support</strong>
+            <p>Best for setup questions, feature questions, or anything you want help understanding.</p>
+            <a href="mailto:support@myrecordsmyhealth.com">support@myrecordsmyhealth.com</a>
+          </div>
+          <div class="quick-card">
+            <strong>Review privacy details</strong>
+            <p>Best for questions about storage, encryption, offline use, and how your records are handled.</p>
+            <a href="privacy-policy.html">Open privacy policy</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <span class="section-tag">What We Help With</span>
+          <h2>Support topics people usually need</h2>
+          <p>These are the areas most users ask about first.</p>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <div class="icon-wrap">📱</div>
+            <h3>First-time setup</h3>
+            <p>Adding medications, allergies, emergency contacts, insurance, conditions, and documents in the right order.</p>
+          </div>
+          <div class="card">
+            <div class="icon-wrap">♿</div>
+            <h3>Accessibility settings</h3>
+            <p>Large text, high contrast, haptics, reduced motion, and screen-reader-friendly use across the app.</p>
+          </div>
+          <div class="card">
+            <div class="icon-wrap">🌍</div>
+            <h3>Language help</h3>
+            <p>Switching languages, understanding English fallback, and making the app easier to use in urgent situations.</p>
+          </div>
+          <div class="card">
+            <div class="icon-wrap">🚑</div>
+            <h3>Emergency readiness</h3>
+            <p>Knowing which information matters most for EMTs, ER intake, and specialist visits.</p>
+          </div>
+          <div class="card">
+            <div class="icon-wrap">🔐</div>
+            <h3>Privacy and lock options</h3>
+            <p>Understanding on-device storage, lock behavior, and how the app protects information you save.</p>
+          </div>
+          <div class="card">
+            <div class="icon-wrap">👨‍👩‍👧</div>
+            <h3>Caregiver use</h3>
+            <p>Using the app for a spouse, parent, child, or another loved one who needs help managing information.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="faq">
+        <div class="section-head">
+          <span class="section-tag">FAQ</span>
+          <h2>Quick answers</h2>
+          <p>Short, plain-language answers to the questions most likely to come up.</p>
+        </div>
+        <div style="max-width: 780px; margin: 0 auto;">
+          <details class="faq">
+            <summary>Where is my health information stored?</summary>
+            <p>Your information is stored on your device. The app is built so your records stay under your control instead of being kept in a central cloud database.</p>
+          </details>
+          <details class="faq">
+            <summary>Does the app work without internet?</summary>
+            <p>Yes. The app is designed for offline use so the important information is still available when signal or Wi-Fi is weak or missing.</p>
+          </details>
+          <details class="faq">
+            <summary>Can I set it up for someone else?</summary>
+            <p>Yes. Many people use it for a spouse, child, parent, or another loved one who needs help keeping medical information organized.</p>
+          </details>
+          <details class="faq">
+            <summary>Can I get help with accessibility settings?</summary>
+            <p>Yes. If you need help with screen readers, large text, contrast, haptics, or other accessibility features, email support and describe what you need.</p>
+          </details>
+          <details class="faq">
+            <summary>How do I contact support?</summary>
+            <p>Email <a href="mailto:support@myrecordsmyhealth.com">support@myrecordsmyhealth.com</a>. Include your question and, if helpful, a short description of what you were trying to do.</p>
+          </details>
+          <details class="faq">
+            <summary>Where can I read the privacy policy?</summary>
+            <p>You can read it here: <a href="privacy-policy.html">privacy-policy.html</a>.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="note">
+          <h3>Important note</h3>
+          <p>
+            MyRecordsMyHealth helps you organize and present your personal medical information.
+            It does not diagnose, treat, or replace licensed medical care.
+          </p>
+        </div>
+      </section>
+
+      <footer>
+        <div>© <span id="year"></span> MyRecordsMyHealth · support@myrecordsmyhealth.com</div>
+        <div>
+          <a href="index.html">Home</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="mailto:support@myrecordsmyhealth.com">Support</a>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>

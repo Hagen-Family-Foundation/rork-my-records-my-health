@@ -1,0 +1,60 @@
+MyRecordsMyHealth Reviewer Notes
+Operator: My Body Is My Health
+
+Overview
+MyRecordsMyHealth is a personal health record and emergency information app operated by My Body Is My Health. Users can store medications, allergies, conditions, procedures, insurance details, emergency contacts, emergency notes, and medical document images for quick access during emergencies.
+
+Accessibility and inclusive use
+- The app includes large text, high contrast, reduced motion, screen reader support, and haptic cues.
+- These features are intended to make the app easier to use for people with low vision, no vision, and a wide range of accessibility needs or health conditions.
+- Accessibility support complements the app’s emergency purpose by helping more people and caregivers access critical information quickly.
+
+Privacy and data handling
+- The app is designed so health record data stays local on the user’s device.
+- No account creation or login is required.
+- The app does not silently transmit health record data to the developer.
+- Sharing is user initiated only.
+- Users may copy exports to the clipboard or open their own email app to send a record to a doctor or caregiver.
+- The app does not sell, rent, or broker health data.
+
+Permissions used
+- Camera: used to photograph medical documents and support barcode or QR medication scanning.
+- Photo library: used to import document images selected by the user.
+- Biometrics: optional local unlock for sensitive health information on supported devices.
+
+Security details
+- The app uses local encryption and secure storage mechanisms for sensitive data.
+- Optional biometric unlock is handled through the device operating system.
+- Biometric templates are not collected by the app.
+
+Medical positioning
+- The app is for user-managed record storage and emergency reference.
+- It is not presented as a diagnostic tool or a substitute for professional medical records.
+- The app includes user-facing clinical disclaimer language in the sharing flow.
+
+Apple review notes
+- No hidden accounts, subscriptions, ads, or background data collection.
+- Export and sharing actions require explicit user action.
+- The privacy policy should be published at your external privacy policy URL before submission.
+- Suggested App Privacy declaration: Data Not Collected, based on the current app behavior.
+- Accessibility accommodations are already present in the shipped app and support users with low vision, blindness, and other accessibility needs.
+
+Microsoft review notes
+- The app stores sensitive information locally and does not require cloud account setup.
+- Camera and photo permissions are tied directly to user-requested document capture and import features.
+- Sharing is controlled entirely by the user.
+- No advertising, tracking, or silent server-side collection is implemented in the current app.
+- Accessibility support is part of the product value, with built-in options that help a broader range of users access emergency information reliably.
+
+Suggested reviewer test flow
+1. Launch the app and create or review a local health record.
+2. Open document management and add a document using camera or photo library.
+3. Open security settings and enable biometric unlock on a supported device.
+4. Open the share screen and verify that sharing requires user action through clipboard or email.
+5. Review the privacy policy URL for full privacy disclosures.
+
+Support contact
+support@myrecordsmyhealth.com
+
+Brand context
+MyRecordsMyHealth is part of a broader family of health-focused apps under the My Body Is My Health brand.

@@ -1,0 +1,1127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyRecordsMyHealth — Welcome and setup guide</title>
+    <meta
+      name="description"
+      content="A reassuring post-purchase onboarding page for MyRecordsMyHealth with sign-in guidance, password help, setup steps, wallet card expectations, support paths, and scenario-based video placeholders."
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #eef4f8;
+        --surface: rgba(255, 255, 255, 0.95);
+        --surface-strong: #ffffff;
+        --text: #10233a;
+        --muted: #5d6e80;
+        --border: rgba(16, 35, 58, 0.12);
+        --accent: #123356;
+        --accent-2: #2d5b88;
+        --accent-soft: #dce9f4;
+        --green: #0d9a6c;
+        --amber: #d68d26;
+        --red: #c43a3a;
+        --shadow: 0 24px 70px rgba(16, 35, 58, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--text);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        background:
+          radial-gradient(circle at top left, rgba(111, 213, 166, 0.14), transparent 22%),
+          radial-gradient(circle at bottom right, rgba(45, 91, 136, 0.12), transparent 28%),
+          linear-gradient(180deg, #f8fbfe 0%, var(--bg) 46%, #e7eef4 100%);
+      }
+
+      a {
+        color: var(--accent-2);
+      }
+
+      .shell {
+        width: 100%;
+        max-width: 1160px;
+        margin: 0 auto;
+        padding: 24px 20px 64px;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 6px 4px 26px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+
+      .brand-mark {
+        width: 40px;
+        height: 40px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, #123356, #2d5b88);
+        color: #ffffff;
+        box-shadow: 0 10px 28px rgba(18, 51, 86, 0.26);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text);
+        font-size: 14px;
+        font-weight: 700;
+        opacity: 0.82;
+      }
+
+      .nav-links a:hover {
+        opacity: 1;
+      }
+
+      .nav-cta {
+        background: var(--accent);
+        color: #ffffff !important;
+        padding: 10px 16px;
+        border-radius: 999px;
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        border-radius: 34px;
+        padding: 50px 40px 38px;
+        background:
+          radial-gradient(circle at 88% 18%, rgba(111, 213, 166, 0.2), transparent 24%),
+          radial-gradient(circle at 12% 90%, rgba(214, 141, 38, 0.14), transparent 28%),
+          linear-gradient(180deg, #102845 0%, #14365a 56%, #2d5b88 100%);
+        color: #ffffff;
+        box-shadow: 0 30px 90px rgba(16, 35, 58, 0.2);
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 28px;
+        align-items: stretch;
+        position: relative;
+        z-index: 1;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        color: #d9e8fb;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: #6fd5a6;
+        box-shadow: 0 0 0 7px rgba(111, 213, 166, 0.14);
+      }
+
+      h1 {
+        margin: 18px 0 14px;
+        font-size: clamp(36px, 5vw, 58px);
+        line-height: 1.03;
+        letter-spacing: -0.05em;
+      }
+
+      .hero p {
+        margin: 0;
+        max-width: 660px;
+        color: rgba(255, 255, 255, 0.84);
+        font-size: 18px;
+      }
+
+      .tagline-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 22px;
+      }
+
+      .tagline-card {
+        padding: 16px 18px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.45;
+      }
+
+      .action-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 14px 18px;
+        border-radius: 16px;
+        text-decoration: none;
+        font-weight: 800;
+        transition: transform 0.16s ease, box-shadow 0.16s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn-primary {
+        background: #ffffff;
+        color: var(--accent);
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.16);
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .btn-ghost {
+        background: rgba(255, 255, 255, 0.05);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 22px;
+      }
+
+      .hero-meta span {
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .hero-panel {
+        display: grid;
+        gap: 14px;
+      }
+
+      .hero-card {
+        border-radius: 24px;
+        padding: 22px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        backdrop-filter: blur(10px);
+      }
+
+      .hero-card h2,
+      .hero-card h3 {
+        margin: 0 0 8px;
+        font-size: 21px;
+      }
+
+      .hero-card p {
+        font-size: 14.5px;
+        color: rgba(255, 255, 255, 0.76);
+      }
+
+      .step-list {
+        display: grid;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .step-item {
+        display: grid;
+        grid-template-columns: 34px minmax(0, 1fr);
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .step-number {
+        width: 34px;
+        height: 34px;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        background: #ffffff;
+        color: var(--accent);
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      .step-item strong {
+        display: block;
+        font-size: 15px;
+        color: #ffffff;
+      }
+
+      .step-item span {
+        display: block;
+        margin-top: 4px;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.72);
+      }
+
+      .confidence-strip {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .confidence-card {
+        padding: 16px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .confidence-card strong {
+        display: block;
+        font-size: 22px;
+        letter-spacing: -0.04em;
+      }
+
+      .confidence-card span {
+        display: block;
+        margin-top: 6px;
+        color: rgba(255, 255, 255, 0.74);
+        font-size: 13px;
+      }
+
+      .section {
+        margin-top: 68px;
+      }
+
+      .section-head {
+        max-width: 780px;
+        margin: 0 auto 34px;
+        text-align: center;
+      }
+
+      .section-tag {
+        display: inline-block;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .section-head h2 {
+        margin: 12px 0 12px;
+        font-size: clamp(28px, 3.5vw, 42px);
+        line-height: 1.08;
+        letter-spacing: -0.04em;
+      }
+
+      .section-head p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 17px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+      }
+
+      .icon-wrap {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 20px;
+        margin-bottom: 16px;
+      }
+
+      .card h3 {
+        margin: 0 0 8px;
+        font-size: 19px;
+        letter-spacing: -0.02em;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14.8px;
+      }
+
+      .signin-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+
+      .signin-card {
+        border-radius: 28px;
+        padding: 26px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 249, 252, 0.96));
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+      }
+
+      .signin-card h3 {
+        margin: 0 0 10px;
+        font-size: 23px;
+        letter-spacing: -0.03em;
+      }
+
+      .signin-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .signin-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .signin-list span {
+        display: block;
+        padding: 10px 12px;
+        border-radius: 14px;
+        background: rgba(18, 51, 86, 0.05);
+        color: var(--text);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .timeline-card {
+        border-radius: 24px;
+        padding: 22px;
+        background: linear-gradient(180deg, #ffffff, #f7fbfe);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+      }
+
+      .timeline-card strong {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 900;
+        margin-bottom: 14px;
+      }
+
+      .timeline-card h3 {
+        margin: 0 0 8px;
+        font-size: 19px;
+      }
+
+      .timeline-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14.5px;
+      }
+
+      .video-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .video-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 26px;
+        padding: 20px;
+        box-shadow: var(--shadow);
+      }
+
+      .video-frame {
+        position: relative;
+        border-radius: 20px;
+        min-height: 190px;
+        overflow: hidden;
+        background:
+          linear-gradient(180deg, rgba(18, 51, 86, 0.12), rgba(18, 51, 86, 0.04)),
+          linear-gradient(135deg, #dce9f4, #f8fbfe);
+        border: 1px solid rgba(18, 51, 86, 0.08);
+        display: grid;
+        place-items: center;
+      }
+
+      .video-frame::before {
+        content: "";
+        width: 72px;
+        height: 72px;
+        border-radius: 999px;
+        background: rgba(18, 51, 86, 0.92);
+        box-shadow: 0 16px 30px rgba(18, 51, 86, 0.18);
+      }
+
+      .video-frame::after {
+        content: "▶";
+        position: absolute;
+        font-size: 28px;
+        color: #ffffff;
+        transform: translateX(2px);
+      }
+
+      .video-card strong {
+        display: block;
+        margin-top: 16px;
+        font-size: 18px;
+      }
+
+      .video-card span {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 14.5px;
+      }
+
+      .trust-band {
+        overflow: hidden;
+        border-radius: 30px;
+        padding: 34px;
+        background:
+          radial-gradient(circle at 82% 18%, rgba(111, 213, 166, 0.2), transparent 22%),
+          linear-gradient(135deg, #123356 0%, #2d5b88 100%);
+        color: #ffffff;
+        box-shadow: 0 28px 80px rgba(18, 51, 86, 0.2);
+      }
+
+      .trust-grid {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 24px;
+        align-items: center;
+      }
+
+      .trust-band h2 {
+        margin: 10px 0 12px;
+        font-size: clamp(28px, 3.5vw, 40px);
+        line-height: 1.08;
+        letter-spacing: -0.04em;
+      }
+
+      .trust-band p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 16px;
+      }
+
+      .trust-points {
+        display: grid;
+        gap: 12px;
+      }
+
+      .trust-points div {
+        padding: 14px 16px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+      }
+
+      .trust-points strong {
+        display: block;
+        font-size: 15px;
+      }
+
+      .trust-points span {
+        display: block;
+        margin-top: 4px;
+        font-size: 13.5px;
+        color: rgba(255, 255, 255, 0.74);
+      }
+
+      .support-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .support-card {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 249, 252, 0.96));
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+      }
+
+      .support-card h3 {
+        margin: 0 0 8px;
+        font-size: 19px;
+      }
+
+      .support-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14.8px;
+      }
+
+      .support-card a {
+        display: inline-block;
+        margin-top: 14px;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .faq-wrap {
+        max-width: 820px;
+        margin: 0 auto;
+      }
+
+      details {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 18px 20px;
+        box-shadow: var(--shadow);
+      }
+
+      details + details {
+        margin-top: 12px;
+      }
+
+      summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        font-size: 15.5px;
+        font-weight: 800;
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      summary::after {
+        content: "+";
+        font-size: 24px;
+        color: var(--muted);
+        font-weight: 400;
+      }
+
+      details[open] summary::after {
+        content: "–";
+      }
+
+      details p {
+        margin: 12px 0 0;
+        color: var(--muted);
+        font-size: 14.5px;
+      }
+
+      .final-cta {
+        position: relative;
+        overflow: hidden;
+        margin-top: 68px;
+        border-radius: 30px;
+        padding: 42px 28px;
+        text-align: center;
+        background:
+          radial-gradient(circle at 50% 0%, rgba(111, 213, 166, 0.22), transparent 30%),
+          linear-gradient(135deg, #102845 0%, #2d5b88 100%);
+        color: #ffffff;
+        box-shadow: 0 28px 90px rgba(18, 51, 86, 0.2);
+      }
+
+      .final-cta h2 {
+        margin: 0 0 12px;
+        font-size: clamp(30px, 3.6vw, 44px);
+        line-height: 1.08;
+        letter-spacing: -0.04em;
+      }
+
+      .final-cta p {
+        max-width: 760px;
+        margin: 0 auto;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 17px;
+      }
+
+      .final-cta .action-row {
+        justify-content: center;
+      }
+
+      footer {
+        margin-top: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 6px 4px 0;
+        color: var(--muted);
+        font-size: 13.5px;
+      }
+
+      footer a {
+        text-decoration: none;
+        color: var(--muted);
+        margin-left: 14px;
+      }
+
+      footer a:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 980px) {
+        .hero-grid,
+        .grid,
+        .signin-grid,
+        .timeline,
+        .video-grid,
+        .support-grid,
+        .trust-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .tagline-row,
+        .confidence-strip {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .nav {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .nav-links {
+          justify-content: flex-start;
+        }
+
+        .hero {
+          padding: 38px 24px 28px;
+          border-radius: 28px;
+        }
+
+        .section,
+        .final-cta {
+          margin-top: 54px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <nav class="nav">
+        <a class="brand" href="landing-page.html">
+          <span class="brand-mark">M</span>
+          <span>MyRecordsMyHealth</span>
+        </a>
+        <div class="nav-links">
+          <a href="#signin">Sign in</a>
+          <a href="#onboarding">Onboarding</a>
+          <a href="#videos">Videos</a>
+          <a href="#support">Support</a>
+          <a href="support.html">Help center</a>
+          <a class="nav-cta" href="#finish">Finish setup</a>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div class="hero-grid">
+          <div>
+            <span class="eyebrow"><span class="dot"></span> Welcome after purchase</span>
+            <h1>You are one calm setup away from a stronger emergency record.</h1>
+            <p>
+              Welcome to MyRecordsMyHealth. This page is your reassuring next step after purchase.
+              It explains how to sign in, create your password if needed, start onboarding, and complete the details
+              that make the app and wallet card most useful for everyday care and emergency readiness.
+            </p>
+            <div class="tagline-row">
+              <div class="tagline-card">“The information contained on the wallet card and in this app may someday save your life”</div>
+              <div class="tagline-card">“This app saves lives everyday!”</div>
+            </div>
+            <div class="action-row">
+              <a class="btn btn-primary" href="#signin">Sign in now</a>
+              <a class="btn btn-secondary" href="#password-help">Create or reset password</a>
+              <a class="btn btn-ghost" href="#onboarding">Continue setup</a>
+              <a class="btn btn-ghost" href="support.html">Get support</a>
+            </div>
+            <div class="hero-meta">
+              <span>Sign-in guidance</span>
+              <span>Onboarding steps</span>
+              <span>Wallet card expectations</span>
+              <span>Support reminders</span>
+              <span>Confidence-building next steps</span>
+            </div>
+          </div>
+          <div class="hero-panel">
+            <div class="hero-card">
+              <h2>What to do first</h2>
+              <p>Follow these first steps in order so the setup feels simple and steady.</p>
+              <div class="step-list">
+                <div class="step-item">
+                  <div class="step-number">1</div>
+                  <div>
+                    <strong>Sign in to your account or purchase access point</strong>
+                    <span>Use the sign-in path that was provided after purchase so you can continue with your personal setup.</span>
+                  </div>
+                </div>
+                <div class="step-item">
+                  <div class="step-number">2</div>
+                  <div>
+                    <strong>Create or confirm your password</strong>
+                    <span>Choose a password you can remember and store it somewhere safe if you need to.</span>
+                  </div>
+                </div>
+                <div class="step-item">
+                  <div class="step-number">3</div>
+                  <div>
+                    <strong>Start entering the medical details that matter most</strong>
+                    <span>Begin with medications, allergies, diagnoses, emergency contacts, physicians, and language preferences.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="confidence-strip">
+              <div class="confidence-card">
+                <strong>Start</strong>
+                <span>with the most critical information first</span>
+              </div>
+              <div class="confidence-card">
+                <strong>Keep</strong>
+                <span>the record current as care changes</span>
+              </div>
+              <div class="confidence-card">
+                <strong>Finish</strong>
+                <span>setup so the tool can serve you when it matters</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="signin">
+        <div class="section-head">
+          <span class="section-tag">Sign in and password help</span>
+          <h2>A calm welcome for first-time users</h2>
+          <p>
+            This section is meant to reduce hesitation. It tells customers what to do next and reassures them that setup can happen step by step.
+          </p>
+        </div>
+        <div class="signin-grid">
+          <article class="signin-card">
+            <h3>Sign in</h3>
+            <p>
+              Use your purchase confirmation details or your normal sign-in route to open MyRecordsMyHealth and continue into setup.
+              If you signed up on behalf of a parent, spouse, child, or dependent, use the same sign-in path tied to that purchase.
+            </p>
+            <div class="signin-list">
+              <span>Open the app and choose the sign-in option you were given</span>
+              <span>Confirm the email or identifier linked to the purchase</span>
+              <span>Move directly to onboarding once access is confirmed</span>
+            </div>
+          </article>
+          <article class="signin-card" id="password-help">
+            <h3>Create or reset your password</h3>
+            <p>
+              If this is your first visit after purchase, create a password that is easy for you to manage and hard for others to guess.
+              If you are helping someone else, document the password in a safe place that the right caregiver can reach if needed.
+            </p>
+            <div class="signin-list">
+              <span>Create a strong password you can still recover with confidence</span>
+              <span>Use password reset help right away if you are blocked</span>
+              <span>Contact support if sign-in or password steps feel unclear</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="onboarding">
+        <div class="section-head">
+          <span class="section-tag">Onboarding flow</span>
+          <h2>What to enter first so the record becomes useful quickly</h2>
+          <p>
+            The goal is not to fill everything in perfectly on day one. The goal is to capture the most important information first, then strengthen the record over time.
+          </p>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <div class="icon-wrap">💊</div>
+            <h3>Medications</h3>
+            <p>Add current medication names, dosages, schedules, and any notes that help a doctor, nurse, caregiver, or EMT understand what is being taken now.</p>
+          </article>
+          <article class="card">
+            <div class="icon-wrap">⚠️</div>
+            <h3>Allergies and reactions</h3>
+            <p>List allergies clearly and include the reaction whenever possible so the most urgent safety information is hard to miss.</p>
+          </article>
+          <article class="card">
+            <div class="icon-wrap">🩺</div>
+            <h3>Diagnoses and medical history</h3>
+            <p>Record conditions, surgeries, procedures, chronic issues, and other key facts that help explain the person’s broader health picture.</p>
+          </article>
+          <article class="card">
+            <div class="icon-wrap">📞</div>
+            <h3>Emergency contacts</h3>
+            <p>Add the people who should be reached first, including their role, phone number, and anything helpful a responder should know.</p>
+          </article>
+          <article class="card">
+            <div class="icon-wrap">👨‍⚕️</div>
+            <h3>Physician and care team details</h3>
+            <p>Enter primary care, specialists, clinic details, and other provider information that may help coordinate care faster.</p>
+          </article>
+          <article class="card">
+            <div class="icon-wrap">🌍</div>
+            <h3>Language and communication preferences</h3>
+            <p>Note preferred language and communication needs so care can be clearer, gentler, and more effective in urgent situations.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <span class="section-tag">What to expect</span>
+          <h2>How the tool, wallet card, and ongoing updates work together</h2>
+          <p>
+            Customers need confidence about what happens after setup. This page explains the app’s ongoing value so they know what to maintain and why it matters.
+          </p>
+        </div>
+        <div class="timeline">
+          <article class="timeline-card">
+            <strong>1</strong>
+            <h3>Build the essential record</h3>
+            <p>Enter the critical information first so the app is useful as early as possible, even before every optional field is complete.</p>
+          </article>
+          <article class="timeline-card">
+            <strong>2</strong>
+            <h3>Use the wallet card as a fast-access bridge</h3>
+            <p>The wallet card helps point to the vital information and reinforces emergency readiness away from home.</p>
+          </article>
+          <article class="timeline-card">
+            <strong>3</strong>
+            <h3>Keep details current</h3>
+            <p>Review the record after medication changes, new diagnoses, procedures, provider updates, or important care events.</p>
+          </article>
+          <article class="timeline-card">
+            <strong>4</strong>
+            <h3>Use it in real life, not just emergencies</h3>
+            <p>The same record can help with appointments, specialist visits, hospital intake, travel, caregiving coordination, and communication across languages.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="videos">
+        <div class="section-head">
+          <span class="section-tag">Video walkthroughs</span>
+          <h2>Scenario-based videos that build confidence for first-time users</h2>
+          <p>
+            Keep space here for short walkthroughs that show real-world use cases and help customers understand how the tool can support them and the people they care for.
+          </p>
+        </div>
+        <div class="video-grid">
+          <article class="video-card">
+            <div class="video-frame" aria-hidden="true"></div>
+            <strong>Emergency care walkthrough</strong>
+            <span>Show how an EMT, nurse, or ER intake team can benefit when medications, allergies, diagnoses, and emergency contacts are already organized.</span>
+          </article>
+          <article class="video-card">
+            <div class="video-frame" aria-hidden="true"></div>
+            <strong>Clinical communication walkthrough</strong>
+            <span>Show a doctor or specialist appointment where a patient or caregiver can answer questions clearly and quickly using the prepared record.</span>
+          </article>
+          <article class="video-card">
+            <div class="video-frame" aria-hidden="true"></div>
+            <strong>Caregiver coordination walkthrough</strong>
+            <span>Show a caregiver helping a senior parent or spouse update information so the family is less dependent on memory and scattered notes.</span>
+          </article>
+          <article class="video-card">
+            <div class="video-frame" aria-hidden="true"></div>
+            <strong>Special-needs family walkthrough</strong>
+            <span>Show how a family can store communication preferences, diagnoses, routines, and critical details in a format that supports advocacy and calmer care.</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="trust-band">
+          <div class="trust-grid">
+            <div>
+              <span class="eyebrow"><span class="dot"></span> Confidence and support</span>
+              <h2>Customers should leave this page feeling supported, not intimidated.</h2>
+              <p>
+                The post-purchase experience should reassure people that they do not need to do everything at once.
+                They only need to keep moving through the right next step until the record is complete enough to truly help.
+              </p>
+              <div class="action-row">
+                <a class="btn btn-primary" href="#finish">Complete setup</a>
+                <a class="btn btn-secondary" href="support.html">Need help?</a>
+              </div>
+            </div>
+            <div class="trust-points">
+              <div>
+                <strong>Simple next steps</strong>
+                <span>Sign in, create a password if needed, begin onboarding, and return later to keep improving the record.</span>
+              </div>
+              <div>
+                <strong>Gentle reminders</strong>
+                <span>Focus first on medications, allergies, diagnoses, emergency contacts, physician details, and communication needs.</span>
+              </div>
+              <div>
+                <strong>Life-saving purpose</strong>
+                <span>Complete setup fully so the app can serve as a dependable medical record tool when everyday care or emergencies demand fast clarity.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="support">
+        <div class="section-head">
+          <span class="section-tag">Support paths</span>
+          <h2>Help for sign-in, setup, questions, and confidence</h2>
+          <p>
+            The support section gives customers an immediate path if they get stuck, feel unsure, or want a walkthrough before continuing.
+          </p>
+        </div>
+        <div class="support-grid">
+          <article class="support-card">
+            <h3>Sign-in or password help</h3>
+            <p>If you cannot get into the app or need help resetting your password, use the support path right away instead of losing momentum.</p>
+            <a href="mailto:support@myrecordsmyhealth.com?subject=Sign-in%20help%20for%20MyRecordsMyHealth">Get sign-in help</a>
+          </article>
+          <article class="support-card">
+            <h3>Onboarding guidance</h3>
+            <p>If you are unsure what to enter first, ask for help prioritizing medications, allergies, diagnoses, emergency contacts, and physician details.</p>
+            <a href="mailto:support@myrecordsmyhealth.com?subject=Onboarding%20help%20for%20MyRecordsMyHealth">Get onboarding help</a>
+          </article>
+          <article class="support-card">
+            <h3>General support and walkthroughs</h3>
+            <p>If you want more context, use the support page and video placeholders as part of a steady, confidence-building onboarding experience.</p>
+            <a href="support.html">Open support page</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <span class="section-tag">Frequently asked</span>
+          <h2>Questions a first-time customer may still have</h2>
+        </div>
+        <div class="faq-wrap">
+          <details>
+            <summary>Do I need to complete every field at once?</summary>
+            <p>No. Start with the most important information first, then come back to strengthen the record over time.</p>
+          </details>
+          <details>
+            <summary>What should I enter first if I feel overwhelmed?</summary>
+            <p>Begin with medications, allergies, diagnoses, emergency contacts, physician details, and language or communication preferences.</p>
+          </details>
+          <details>
+            <summary>How do the app and wallet card work together?</summary>
+            <p>The app holds the organized record, while the wallet card helps make essential information easier to reach quickly in urgent situations.</p>
+          </details>
+          <details>
+            <summary>Can I use this for a parent, spouse, child, or dependent?</summary>
+            <p>Yes. The messaging and setup flow are built to support seniors, caregivers, people with disabilities or special needs, and families managing care for someone else.</p>
+          </details>
+          <details>
+            <summary>What if I need help before I finish setup?</summary>
+            <p>Use the support page or email support so you can keep moving with confidence instead of stopping halfway through the process.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="final-cta" id="finish">
+        <h2>Complete the setup while the details are fresh.</h2>
+        <p>
+          Finish the record fully so MyRecordsMyHealth can become the dependable, life-saving medical record resource it is meant to be for you, your family, and the people who may someday need to help quickly.
+        </p>
+        <div class="action-row">
+          <a class="btn btn-primary" href="#onboarding">Continue setup now</a>
+          <a class="btn btn-secondary" href="#signin">Return to sign-in steps</a>
+          <a class="btn btn-ghost" href="support.html">Get support</a>
+          <a class="btn btn-ghost" href="landing-page.html">Back to landing page</a>
+        </div>
+      </section>
+
+      <footer>
+        <div>© <span id="year"></span> MyRecordsMyHealth · support@myrecordsmyhealth.com</div>
+        <div>
+          <a href="landing-page.html">Landing page</a>
+          <a href="support.html">Support</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,3025 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyRecordsMyHealth Website Builder</title>
+    <meta
+      name="description"
+      content="A visual builder for shaping the MyRecordsMyHealth landing page with live preview, style presets, section controls, and export tools."
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #eef3f8;
+        --panel: rgba(255, 255, 255, 0.94);
+        --panel-strong: #ffffff;
+        --text: #10233a;
+        --muted: #627183;
+        --border: rgba(16, 35, 58, 0.1);
+        --accent: #112741;
+        --accent-2: #2d5b88;
+        --accent-3: #7be0b0;
+        --danger: #cf2d2d;
+        --shadow: 0 24px 70px rgba(16, 35, 58, 0.14);
+        --radius: 24px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(123, 224, 176, 0.12), transparent 28%),
+          radial-gradient(circle at bottom right, rgba(45, 91, 136, 0.1), transparent 32%),
+          linear-gradient(180deg, #f5f8fb 0%, #eaf0f6 100%);
+      }
+
+      button,
+      input,
+      textarea,
+      select {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      .builder-shell {
+        display: grid;
+        grid-template-columns: 380px minmax(0, 1fr);
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        padding: 22px;
+        border-right: 1px solid rgba(16, 35, 58, 0.08);
+        background: rgba(255, 255, 255, 0.84);
+        backdrop-filter: blur(18px);
+        overflow-y: auto;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 18px;
+      }
+
+      .builder-head {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .brand-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-mark {
+        width: 46px;
+        height: 46px;
+        border-radius: 16px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, #112741, #2d5b88);
+        color: #ffffff;
+        font-weight: 900;
+        font-size: 18px;
+        box-shadow: 0 14px 28px rgba(17, 39, 65, 0.22);
+      }
+
+      .brand-copy h1 {
+        margin: 0;
+        font-size: 22px;
+        letter-spacing: -0.04em;
+      }
+
+      .brand-copy p {
+        margin: 4px 0 0;
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      .status-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        width: fit-content;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(123, 224, 176, 0.18);
+        color: #0c6b47;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: #0c9a65;
+        box-shadow: 0 0 0 6px rgba(12, 154, 101, 0.12);
+      }
+
+      .panel-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .panel-header h2,
+      .panel-header h3 {
+        margin: 0;
+        font-size: 16px;
+        letter-spacing: -0.02em;
+      }
+
+      .panel-header p {
+        margin: 5px 0 0;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .pill-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .pill-button,
+      .tool-button,
+      .ghost-button,
+      .icon-button,
+      .add-button,
+      .remove-button {
+        border: 1px solid var(--border);
+        background: #ffffff;
+        color: var(--text);
+        transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+      }
+
+      .pill-button:hover,
+      .tool-button:hover,
+      .ghost-button:hover,
+      .icon-button:hover,
+      .add-button:hover,
+      .remove-button:hover {
+        transform: translateY(-1px);
+        border-color: rgba(45, 91, 136, 0.3);
+        box-shadow: 0 12px 22px rgba(16, 35, 58, 0.08);
+      }
+
+      .pill-button {
+        border-radius: 18px;
+        padding: 12px 14px;
+        min-width: 112px;
+        text-align: left;
+      }
+
+      .pill-button strong {
+        display: block;
+        font-size: 13px;
+      }
+
+      .pill-button span {
+        display: block;
+        margin-top: 4px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .pill-button.active {
+        background: linear-gradient(180deg, rgba(17, 39, 65, 0.98), rgba(45, 91, 136, 0.98));
+        color: #ffffff;
+        border-color: transparent;
+      }
+
+      .pill-button.active span {
+        color: rgba(255, 255, 255, 0.74);
+      }
+
+      .tool-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .tool-button,
+      .ghost-button {
+        border-radius: 16px;
+        padding: 12px 14px;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .tool-button.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #ffffff;
+      }
+
+      .ghost-button {
+        background: rgba(255, 255, 255, 0.8);
+      }
+
+      .section-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .section-card {
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: #ffffff;
+      }
+
+      .section-card.selected {
+        border-color: rgba(45, 91, 136, 0.28);
+        box-shadow: 0 12px 28px rgba(45, 91, 136, 0.08);
+      }
+
+      .section-card.hidden {
+        opacity: 0.72;
+      }
+
+      .section-main {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .section-select {
+        flex: 1;
+        background: transparent;
+        border: 0;
+        padding: 0;
+        text-align: left;
+      }
+
+      .section-select strong {
+        display: block;
+        font-size: 14px;
+      }
+
+      .section-select span {
+        display: block;
+        margin-top: 4px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .section-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .visibility-chip {
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 8px 10px;
+        background: #ffffff;
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .visibility-chip.is-visible {
+        color: #0c6b47;
+        background: rgba(12, 154, 101, 0.1);
+        border-color: rgba(12, 154, 101, 0.18);
+      }
+
+      .visibility-chip.is-hidden {
+        color: var(--danger);
+        background: rgba(207, 45, 45, 0.08);
+        border-color: rgba(207, 45, 45, 0.16);
+      }
+
+      .icon-button {
+        width: 34px;
+        height: 34px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+      }
+
+      .section-style {
+        width: 100%;
+        margin-top: 10px;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 11px 12px;
+        background: rgba(238, 243, 248, 0.7);
+      }
+
+      .section-style-note {
+        margin: 8px 0 0;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .helper-note,
+      .save-status {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .save-status {
+        min-height: 18px;
+      }
+
+      .builder-callout {
+        display: grid;
+        gap: 6px;
+        padding: 14px;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, rgba(17, 39, 65, 0.06), rgba(123, 224, 176, 0.08));
+      }
+
+      .builder-callout strong {
+        font-size: 13px;
+        letter-spacing: -0.02em;
+      }
+
+      .builder-callout span {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .quick-jump-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .quick-jump-button {
+        border-radius: 999px;
+        padding: 10px 12px;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .quick-jump-button.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #ffffff;
+      }
+
+      .quick-edit-grid {
+        margin-top: 14px;
+      }
+
+      .quick-edit-grid .field.full-width {
+        grid-column: 1 / -1;
+      }
+
+      .start-here-card {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .start-here-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .start-here-item {
+        padding: 14px;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: rgba(247, 250, 252, 0.9);
+      }
+
+      .start-here-item strong {
+        display: block;
+        font-size: 13px;
+        letter-spacing: -0.02em;
+      }
+
+      .start-here-item span {
+        display: block;
+        margin-top: 4px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .mini-path,
+      .meta-pill code {
+        font-family: ui-monospace, SFMono-Regular, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        font-size: 12px;
+      }
+
+      .mini-path {
+        display: inline-flex;
+        align-items: center;
+        padding: 3px 7px;
+        border-radius: 999px;
+        background: rgba(17, 39, 65, 0.08);
+        color: var(--accent);
+      }
+
+      .quick-link-grid,
+      .preset-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .preset-card {
+        padding: 14px;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: #ffffff;
+        color: var(--text);
+        text-align: left;
+        transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+      }
+
+      .preset-card:hover {
+        transform: translateY(-1px);
+        border-color: rgba(45, 91, 136, 0.3);
+        box-shadow: 0 12px 22px rgba(16, 35, 58, 0.08);
+      }
+
+      .preset-card.active {
+        border-color: transparent;
+        background: linear-gradient(180deg, rgba(17, 39, 65, 0.98), rgba(45, 91, 136, 0.98));
+        color: #ffffff;
+      }
+
+      .preset-card strong {
+        display: block;
+        font-size: 13px;
+      }
+
+      .preset-card span {
+        display: block;
+        margin-top: 6px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .preset-card.active span {
+        color: rgba(255, 255, 255, 0.74);
+      }
+
+      .inspector-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .field-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .field,
+      .item-card {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+
+      .field span,
+      .item-card h4 {
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0;
+      }
+
+      .field input,
+      .field textarea,
+      .field select,
+      .item-card input,
+      .item-card textarea {
+        width: 100%;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 12px 14px;
+        background: #ffffff;
+        color: var(--text);
+        outline: none;
+        resize: vertical;
+      }
+
+      .field input:focus,
+      .field textarea:focus,
+      .field select:focus,
+      .item-card input:focus,
+      .item-card textarea:focus {
+        border-color: rgba(45, 91, 136, 0.42);
+        box-shadow: 0 0 0 4px rgba(45, 91, 136, 0.08);
+      }
+
+      .item-card {
+        padding: 14px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: rgba(247, 250, 252, 0.88);
+      }
+
+      .item-card-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .remove-button,
+      .add-button {
+        border-radius: 14px;
+        padding: 10px 12px;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .remove-button {
+        color: var(--danger);
+      }
+
+      .add-button {
+        margin-top: 4px;
+        width: fit-content;
+      }
+
+      .canvas {
+        padding: 22px;
+        overflow: auto;
+      }
+
+      .canvas-shell {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        min-height: calc(100vh - 44px);
+      }
+
+      .canvas-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 20px;
+        border-radius: 26px;
+        background: rgba(17, 39, 65, 0.9);
+        color: #ffffff;
+        box-shadow: 0 30px 70px rgba(17, 39, 65, 0.22);
+      }
+
+      .canvas-topbar h2 {
+        margin: 0;
+        font-size: 22px;
+        letter-spacing: -0.04em;
+      }
+
+      .canvas-topbar p {
+        margin: 4px 0 0;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .canvas-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .canvas-actions .ghost-button {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.16);
+      }
+
+      .canvas-actions .ghost-button:hover {
+        border-color: rgba(255, 255, 255, 0.28);
+      }
+
+      .canvas-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .meta-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.82);
+      }
+
+      .view-switch {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .view-button {
+        border: 0;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.72);
+        border-radius: 12px;
+        padding: 10px 14px;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .view-button.active {
+        background: #ffffff;
+        color: var(--accent);
+      }
+
+      .preview-board {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex: 1;
+        border-radius: 34px;
+        padding: 26px;
+        background:
+          radial-gradient(circle at top right, rgba(123, 224, 176, 0.16), transparent 26%),
+          radial-gradient(circle at bottom left, rgba(45, 91, 136, 0.16), transparent 32%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(240, 245, 250, 0.9));
+        border: 1px solid rgba(16, 35, 58, 0.08);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      }
+
+      .preview-frame-wrap {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+
+      .preview-frame {
+        border: 0;
+        border-radius: 34px;
+        background: #ffffff;
+        box-shadow: 0 40px 110px rgba(17, 39, 65, 0.2);
+        height: calc(100vh - 170px);
+        min-height: 760px;
+        transition: width 0.22s ease;
+      }
+
+      .preview-frame[data-view="desktop"] {
+        width: min(100%, 1320px);
+      }
+
+      .preview-frame[data-view="tablet"] {
+        width: min(100%, 860px);
+      }
+
+      .preview-frame[data-view="mobile"] {
+        width: min(100%, 410px);
+      }
+
+      @media (max-width: 1180px) {
+        .builder-shell {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          border-right: 0;
+          border-bottom: 1px solid rgba(16, 35, 58, 0.08);
+          max-height: none;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .field-grid,
+        .canvas-topbar,
+        .quick-link-grid,
+        .preset-grid {
+          grid-template-columns: 1fr;
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .preview-board,
+        .canvas,
+        .sidebar {
+          padding: 16px;
+        }
+
+        .panel,
+        .canvas-topbar {
+          border-radius: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="builder-shell">
+      <aside class="sidebar">
+        <section class="panel builder-head">
+          <div class="brand-row">
+            <div class="brand-mark">M</div>
+            <div class="brand-copy">
+              <h1>Website Builder</h1>
+              <p>This root page is the editor. Left side changes the site, right side previews it live.</p>
+            </div>
+          </div>
+          <div class="status-chip"><span class="status-dot"></span> local draft saves automatically</div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Start here</h2>
+              <p>This is the visual editing screen you were asking for.</p>
+            </div>
+          </div>
+          <div class="start-here-card">
+            <div class="start-here-list">
+              <div class="start-here-item">
+                <strong>Editor</strong>
+                <span>Open <span class="mini-path">index.html</span> to use the builder itself.</span>
+              </div>
+              <div class="start-here-item">
+                <strong>Standalone landing page</strong>
+                <span><span class="mini-path">landing-page.html</span> is the plain public page without the editor controls.</span>
+              </div>
+              <div class="start-here-item">
+                <strong>Post-purchase guide</strong>
+                <span><span class="mini-path">get-started.html</span> is the separate welcome and onboarding page for customers after purchase.</span>
+              </div>
+              <div class="start-here-item">
+                <strong>Live workflow</strong>
+                <span>Use presets, themes, section controls, and inspector fields here. The preview updates immediately.</span>
+              </div>
+            </div>
+            <div class="quick-link-grid">
+              <button class="tool-button primary" id="open-preview" type="button">Open live preview tab</button>
+              <a class="ghost-button" href="landing-page.html" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;" target="_blank" rel="noreferrer">Open landing page</a>
+              <a class="ghost-button" href="get-started.html" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;" target="_blank" rel="noreferrer">Open setup guide</a>
+              <a class="ghost-button" href="support.html" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;" target="_blank" rel="noreferrer">Open support page</a>
+              <a class="ghost-button" href="privacy-policy.html" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;" target="_blank" rel="noreferrer">Open privacy page</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Quick edit</h2>
+              <p>Change the biggest things first without digging through every setting.</p>
+            </div>
+          </div>
+          <div class="inspector-stack" id="quick-edit"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Style direction</h2>
+              <p>Swap the whole look without losing your content.</p>
+            </div>
+          </div>
+          <div class="pill-group" id="theme-options"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Launch presets</h2>
+              <p>Change the message, tone, and section style in one click.</p>
+            </div>
+          </div>
+          <div class="preset-grid" id="preset-options"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Section manager</h2>
+              <p>Show, hide, reorder, or restyle each block.</p>
+            </div>
+          </div>
+          <div class="section-list" id="section-list"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Inspector</h2>
+              <p>Edit the selected content and links.</p>
+            </div>
+          </div>
+          <div class="inspector-stack" id="inspector"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Tools</h2>
+              <p>Keep moving fast while you decide what belongs.</p>
+            </div>
+          </div>
+          <div class="tool-row">
+            <button class="tool-button primary" id="download-html" type="button">Download HTML</button>
+            <button class="ghost-button" id="copy-config" type="button">Copy config</button>
+            <button class="ghost-button" id="reset-draft" type="button">Reset draft</button>
+          </div>
+          <div class="tool-row" style="margin-top: 10px;">
+            <a class="ghost-button" href="landing-page.html" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;" target="_blank" rel="noreferrer">Open current landing</a>
+            <a class="ghost-button" href="get-started.html" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;" target="_blank" rel="noreferrer">Setup guide</a>
+            <a class="ghost-button" href="support.html" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;" target="_blank" rel="noreferrer">Support page</a>
+            <a class="ghost-button" href="privacy-policy.html" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;" target="_blank" rel="noreferrer">Privacy page</a>
+          </div>
+          <p class="helper-note" style="margin: 12px 0 0;">This builder keeps your draft in this browser so you can try directions without losing your place.</p>
+          <p class="save-status" id="save-status"></p>
+        </section>
+      </aside>
+
+      <main class="canvas">
+        <div class="canvas-shell">
+          <section class="canvas-topbar">
+            <div>
+              <h2>Live preview canvas</h2>
+              <p>Click a block in the preview to jump straight to its editor, then compare the result immediately.</p>
+              <div class="canvas-meta">
+                <span class="meta-pill">Editor: <code>index.html</code></span>
+                <span class="meta-pill">Public landing: <code>landing-page.html</code></span>
+                <span class="meta-pill">Post-purchase page: <code>get-started.html</code></span>
+                <span class="meta-pill">Right side is your no-code preview</span>
+              </div>
+            </div>
+            <div class="canvas-actions">
+              <div class="view-switch" id="view-switch"></div>
+              <button class="ghost-button" id="open-preview-secondary" type="button">Open preview tab</button>
+            </div>
+          </section>
+
+          <section class="preview-board">
+            <div class="preview-frame-wrap">
+              <iframe class="preview-frame" id="preview-frame" title="Website preview"></iframe>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const STORAGE_KEY = 'myrecordsmyhealth-website-builder-v1';
+
+      const THEME_OPTIONS = {
+        clinical: {
+          label: 'Clinical clarity',
+          description: 'Trust-first, crisp, calm.',
+          bg: '#edf3f7',
+          surface: 'rgba(255,255,255,0.95)',
+          surfaceAlt: '#f7fbfd',
+          text: '#10233a',
+          muted: '#5a6c7f',
+          border: 'rgba(16,35,58,0.12)',
+          heroStart: '#10233a',
+          heroEnd: '#2d5b88',
+          accent: '#7be0b0',
+          accentStrong: '#0f9d68',
+          accentSoft: '#ddf7ea',
+          danger: '#cf2d2d',
+          shadow: '0 28px 80px rgba(17,39,65,0.18)',
+          outline: '#d8e4ef'
+        },
+        warm: {
+          label: 'Human warmth',
+          description: 'Friendlier, softer, more welcoming.',
+          bg: '#f7efe7',
+          surface: 'rgba(255,250,246,0.96)',
+          surfaceAlt: '#fff6ef',
+          text: '#38231e',
+          muted: '#7a5d54',
+          border: 'rgba(56,35,30,0.12)',
+          heroStart: '#4b2b23',
+          heroEnd: '#9c5c48',
+          accent: '#ffd59a',
+          accentStrong: '#d07f1d',
+          accentSoft: '#fff0d5',
+          danger: '#b93c2d',
+          shadow: '0 28px 80px rgba(75,43,35,0.18)',
+          outline: '#f0dfd3'
+        },
+        executive: {
+          label: 'Executive dark',
+          description: 'Sharper, higher contrast, premium.',
+          bg: '#0d1523',
+          surface: 'rgba(17,27,43,0.92)',
+          surfaceAlt: '#132033',
+          text: '#ebf2fb',
+          muted: '#9eb0c7',
+          border: 'rgba(235,242,251,0.12)',
+          heroStart: '#0d1523',
+          heroEnd: '#1f3f67',
+          accent: '#8ad9ff',
+          accentStrong: '#58c0f6',
+          accentSoft: 'rgba(88,192,246,0.14)',
+          danger: '#ff7676',
+          shadow: '0 32px 100px rgba(0,0,0,0.34)',
+          outline: 'rgba(255,255,255,0.07)'
+        }
+      };
+
+      const PRESET_OPTIONS = {
+        emergency: {
+          label: 'Emergency-first',
+          description: 'Urgent clarity for launch and high-stress moments.'
+        },
+        family: {
+          label: 'Family & caregiver',
+          description: 'Warmer voice for caregiving, aging, and daily support.'
+        },
+        privacy: {
+          label: 'Privacy & trust',
+          description: 'Sharper focus on local control, trust, and credibility.'
+        },
+        premium: {
+          label: 'Premium launch',
+          description: 'High-contrast, more premium presentation for launch.'
+        }
+      };
+
+      const SECTION_META = {
+        hero: { label: 'Hero', description: 'First impression and top call to action.', styles: ['statement', 'spotlight'] },
+        proof: { label: 'Proof strip', description: 'Quick trust signals across the top.', styles: ['chips', 'band'] },
+        features: { label: 'Features', description: 'What the product actually does.', styles: ['grid', 'split'] },
+        audiences: { label: 'Who it helps', description: 'Show different real-world users.', styles: ['cards', 'bands'] },
+        faq: { label: 'FAQ', description: 'Answer key concerns before they ask.', styles: ['accordion', 'columns'] },
+        cta: { label: 'Final CTA', description: 'Close with the next step.', styles: ['boxed', 'inline'] }
+      };
+
+      const defaultState = {
+        theme: 'clinical',
+        activePreset: 'emergency',
+        view: 'desktop',
+        selectedSection: 'hero',
+        page: {
+          siteName: 'MyRecordsMyHealth',
+          supportEmail: 'support@myrecordsmyhealth.com',
+          primaryNavCtaLabel: 'Request launch notice',
+          primaryNavCtaHref: 'mailto:support@myrecordsmyhealth.com?subject=MyRecordsMyHealth%20launch%20updates'
+        },
+        sections: [
+          { id: 'hero', visible: true, style: 'statement' },
+          { id: 'proof', visible: true, style: 'chips' },
+          { id: 'features', visible: true, style: 'grid' },
+          { id: 'audiences', visible: true, style: 'cards' },
+          { id: 'faq', visible: true, style: 'accordion' },
+          { id: 'cta', visible: true, style: 'boxed' }
+        ],
+        content: {
+          hero: {
+            eyebrow: 'Emergency-ready health records',
+            title: 'A calmer way to have the right medical facts ready when seconds matter.',
+            highlight: 'seconds matter',
+            body: 'MyRecordsMyHealth keeps medications, allergies, conditions, insurance details, and emergency contacts in one place so care teams and families get faster answers.',
+            primaryLabel: 'Talk about launch',
+            primaryHref: 'mailto:support@myrecordsmyhealth.com?subject=MyRecordsMyHealth%20website%20launch',
+            secondaryLabel: 'Open support',
+            secondaryHref: 'support.html',
+            note: 'Built for real people, stressful moments, and fast decisions.',
+            stats: [
+              { label: 'Offline ready', value: 'Always there' },
+              { label: 'Privacy first', value: 'Local control' },
+              { label: 'Language reach', value: 'Multilingual' }
+            ]
+          },
+          proof: {
+            items: ['Offline-first access', 'Accessibility support', 'Multilingual support', 'Clear emergency summary']
+          },
+          features: {
+            heading: 'What the page should make instantly clear',
+            body: 'Keep the promise simple and believable. People should understand the value in one scan, then go deeper only if they want to.',
+            items: [
+              {
+                title: 'Fast emergency snapshot',
+                body: 'Show medications, allergies, conditions, contacts, and insurance details without digging across different places.'
+              },
+              {
+                title: 'Built for stressful moments',
+                body: 'Use large text, strong contrast, clear grouping, and calmer navigation that works for caregivers, seniors, and families.'
+              },
+              {
+                title: 'Privacy-centered by design',
+                body: 'Lead with local control, practical privacy, and offline access so trust is part of the story from the start.'
+              }
+            ]
+          },
+          audiences: {
+            heading: 'Who this speaks to',
+            body: 'Different buyers need to see themselves in the story. Keep each use case grounded in ordinary life, not buzzwords.',
+            items: [
+              {
+                title: 'Caregivers and families',
+                body: 'One reliable record is easier to trust than trying to reconstruct medications and conditions from memory.'
+              },
+              {
+                title: 'Seniors and medically complex users',
+                body: 'Readable screens and strong organization help reduce the friction of keeping important details current.'
+              },
+              {
+                title: 'Travelers and multilingual households',
+                body: 'Critical facts stay ready even when internet access is poor or communication is suddenly harder.'
+              }
+            ]
+          },
+          faq: {
+            heading: 'Questions to answer before launch',
+            body: 'Use this section to remove uncertainty and let people keep moving toward the next step.',
+            items: [
+              {
+                question: 'Why would someone use this instead of notes on their phone?',
+                answer: 'Because it is organized around urgent care scenarios, not around random storage. The structure matters when stress is high.'
+              },
+              {
+                question: 'What should the website promise?',
+                answer: 'Promise easier access to important health information, better readiness, and a calmer path to the facts people need most.'
+              },
+              {
+                question: 'Can this page be exported for Cloudflare later?',
+                answer: 'Yes. This builder can download a standalone HTML page you can refine and deploy as a static site.'
+              }
+            ]
+          },
+          cta: {
+            kicker: 'Ready to shape the launch page?',
+            heading: 'Keep the story simple, credible, and easy to revise.',
+            body: 'Use the builder to test different messages, hide weak sections, and compare styles before locking in a final direction.',
+            primaryLabel: 'Email support',
+            primaryHref: 'mailto:support@myrecordsmyhealth.com',
+            secondaryLabel: 'Review privacy',
+            secondaryHref: 'privacy-policy.html'
+          }
+        }
+      };
+
+      const previewFrame = document.getElementById('preview-frame');
+      const themeOptions = document.getElementById('theme-options');
+      const presetOptions = document.getElementById('preset-options');
+      const sectionList = document.getElementById('section-list');
+      const inspector = document.getElementById('inspector');
+      const quickEdit = document.getElementById('quick-edit');
+      const viewSwitch = document.getElementById('view-switch');
+      const saveStatus = document.getElementById('save-status');
+
+      function deepClone(value) {
+        return JSON.parse(JSON.stringify(value));
+      }
+
+      function normalizeStringArray(value, fallback) {
+        return Array.isArray(value) && value.length > 0 ? value.map((item) => String(item ?? '')) : deepClone(fallback);
+      }
+
+      function normalizeObjectArray(value, fallback, keys) {
+        if (!Array.isArray(value) || value.length === 0) {
+          return deepClone(fallback);
+        }
+        return value.map((item) => {
+          const next = {};
+          keys.forEach((key) => {
+            next[key] = String(item?.[key] ?? '');
+          });
+          return next;
+        });
+      }
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) {
+            return deepClone(defaultState);
+          }
+          const parsed = JSON.parse(raw);
+          return {
+            theme: parsed.theme && THEME_OPTIONS[parsed.theme] ? parsed.theme : defaultState.theme,
+            activePreset: parsed.activePreset && PRESET_OPTIONS[parsed.activePreset] ? parsed.activePreset : defaultState.activePreset,
+            view: parsed.view || defaultState.view,
+            selectedSection: parsed.selectedSection || defaultState.selectedSection,
+            page: {
+              ...defaultState.page,
+              ...(parsed.page || {})
+            },
+            sections: Array.isArray(parsed.sections) && parsed.sections.length > 0
+              ? parsed.sections.map((section) => {
+                  const fallback = defaultState.sections.find((item) => item.id === section.id) || defaultState.sections[0];
+                  const allowedStyles = SECTION_META[section.id]?.styles || fallback.style;
+                  const resolvedStyle = allowedStyles.includes(section.style) ? section.style : fallback.style;
+                  return {
+                    id: section.id,
+                    visible: Boolean(section.visible),
+                    style: resolvedStyle
+                  };
+                }).filter((section) => SECTION_META[section.id])
+              : deepClone(defaultState.sections),
+            content: {
+              hero: {
+                ...defaultState.content.hero,
+                ...(parsed.content?.hero || {}),
+                stats: normalizeObjectArray(parsed.content?.hero?.stats, defaultState.content.hero.stats, ['label', 'value'])
+              },
+              proof: {
+                ...defaultState.content.proof,
+                ...(parsed.content?.proof || {}),
+                items: normalizeStringArray(parsed.content?.proof?.items, defaultState.content.proof.items)
+              },
+              features: {
+                ...defaultState.content.features,
+                ...(parsed.content?.features || {}),
+                items: normalizeObjectArray(parsed.content?.features?.items, defaultState.content.features.items, ['title', 'body'])
+              },
+              audiences: {
+                ...defaultState.content.audiences,
+                ...(parsed.content?.audiences || {}),
+                items: normalizeObjectArray(parsed.content?.audiences?.items, defaultState.content.audiences.items, ['title', 'body'])
+              },
+              faq: {
+                ...defaultState.content.faq,
+                ...(parsed.content?.faq || {}),
+                items: normalizeObjectArray(parsed.content?.faq?.items, defaultState.content.faq.items, ['question', 'answer'])
+              },
+              cta: {
+                ...defaultState.content.cta,
+                ...(parsed.content?.cta || {})
+              }
+            }
+          };
+        } catch (error) {
+          console.error('[WebsiteBuilder] Failed to load draft:', error);
+          return deepClone(defaultState);
+        }
+      }
+
+      let state = loadState();
+
+      function saveState(message) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          setStatus(message || 'Draft saved locally.');
+          console.log('[WebsiteBuilder] Draft saved', state);
+        } catch (error) {
+          console.error('[WebsiteBuilder] Failed to save draft:', error);
+          setStatus('Could not save draft in this browser.');
+        }
+      }
+
+      function setStatus(message) {
+        saveStatus.textContent = message;
+      }
+
+      function escapeHtml(value) {
+        return String(value ?? '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function getByPath(target, path) {
+        return path.split('.').reduce((accumulator, key) => accumulator?.[key], target);
+      }
+
+      function setByPath(target, path, value) {
+        const segments = path.split('.');
+        const lastSegment = segments.pop();
+        if (!lastSegment) return;
+        const parent = segments.reduce((accumulator, key) => accumulator[key], target);
+        parent[lastSegment] = value;
+      }
+
+      function moveSection(id, direction) {
+        const index = state.sections.findIndex((section) => section.id === id);
+        if (index === -1) return;
+        const targetIndex = direction === 'up' ? index - 1 : index + 1;
+        if (targetIndex < 0 || targetIndex >= state.sections.length) return;
+        const reordered = [...state.sections];
+        const [moved] = reordered.splice(index, 1);
+        reordered.splice(targetIndex, 0, moved);
+        state.sections = reordered;
+        saveState('Section order updated.');
+        renderAll();
+      }
+
+      function toggleSection(id) {
+        state.sections = state.sections.map((section) => section.id === id ? { ...section, visible: !section.visible } : section);
+        saveState('Section visibility updated.');
+        renderAll();
+      }
+
+      function addItem(sectionId) {
+        if (sectionId === 'proof') {
+          state.content.proof.items.push('New trust point');
+        }
+        if (sectionId === 'features') {
+          state.content.features.items.push({ title: 'New feature', body: 'Describe why this matters to a real person.' });
+        }
+        if (sectionId === 'audiences') {
+          state.content.audiences.items.push({ title: 'New audience', body: 'Explain why this page matters to them.' });
+        }
+        if (sectionId === 'faq') {
+          state.content.faq.items.push({ question: 'New question', answer: 'Add the clearest possible answer.' });
+        }
+        if (sectionId === 'hero') {
+          state.content.hero.stats.push({ label: 'New stat', value: 'Value' });
+        }
+        saveState('Item added.');
+        renderAll();
+      }
+
+      function removeItem(sectionId, index) {
+        if (sectionId === 'proof') {
+          if (state.content.proof.items.length <= 1) return;
+          state.content.proof.items.splice(index, 1);
+        }
+        if (sectionId === 'features') {
+          if (state.content.features.items.length <= 1) return;
+          state.content.features.items.splice(index, 1);
+        }
+        if (sectionId === 'audiences') {
+          if (state.content.audiences.items.length <= 1) return;
+          state.content.audiences.items.splice(index, 1);
+        }
+        if (sectionId === 'faq') {
+          if (state.content.faq.items.length <= 1) return;
+          state.content.faq.items.splice(index, 1);
+        }
+        if (sectionId === 'hero') {
+          if (state.content.hero.stats.length <= 1) return;
+          state.content.hero.stats.splice(index, 1);
+        }
+        saveState('Item removed.');
+        renderAll();
+      }
+
+      function buildPresetState(presetId) {
+        const supportEmail = state.page.supportEmail || defaultState.page.supportEmail;
+        const launchHref = `mailto:${supportEmail}?subject=${encodeURIComponent('MyRecordsMyHealth launch updates')}`;
+        const demoHref = `mailto:${supportEmail}?subject=${encodeURIComponent('MyRecordsMyHealth website walkthrough')}`;
+
+        if (presetId === 'family') {
+          return {
+            theme: 'warm',
+            activePreset: 'family',
+            selectedSection: 'hero',
+            sections: [
+              { id: 'hero', visible: true, style: 'spotlight' },
+              { id: 'proof', visible: true, style: 'chips' },
+              { id: 'features', visible: true, style: 'grid' },
+              { id: 'audiences', visible: true, style: 'cards' },
+              { id: 'faq', visible: true, style: 'columns' },
+              { id: 'cta', visible: true, style: 'boxed' }
+            ],
+            page: {
+              primaryNavCtaLabel: 'Request walkthrough',
+              primaryNavCtaHref: demoHref
+            },
+            content: {
+              hero: {
+                eyebrow: 'Health details families can actually find',
+                title: 'Keep the important medical facts together before loved ones have to scramble for them.',
+                highlight: 'before loved ones have to scramble',
+                body: 'MyRecordsMyHealth gives families, caregivers, and older adults one calmer place for medications, allergies, conditions, emergency contacts, and practical care notes.',
+                primaryLabel: 'Request walkthrough',
+                primaryHref: demoHref,
+                secondaryLabel: 'Open support',
+                secondaryHref: 'support.html',
+                note: 'Designed for daily life, hospital visits, aging parents, and the moments when memory is not enough.',
+                stats: [
+                  { label: 'Family-friendly flow', value: 'Less confusion' },
+                  { label: 'Readable design', value: 'Large, clear UI' },
+                  { label: 'Anytime access', value: 'Offline ready' }
+                ]
+              },
+              proof: {
+                items: ['Caregiver-friendly layout', 'Offline access when signal is weak', 'Clear emergency summary', 'Built for seniors and families']
+              },
+              features: {
+                heading: 'What families need the page to explain quickly',
+                body: 'The website should reassure people that this app reduces chaos, makes facts easier to find, and supports real caregiving without adding another complicated system.',
+                items: [
+                  { title: 'One reliable record', body: 'Keep medications, diagnoses, allergies, contacts, and supporting details together instead of scattered across paper, memory, and old messages.' },
+                  { title: 'Calmer moments in urgent care', body: 'When someone is sick, traveling, or heading to the hospital, the right information is easier to reach and easier to share.' },
+                  { title: 'Built for people under stress', body: 'Readable structure and simple language matter more than flashy features when families need answers fast.' }
+                ]
+              },
+              audiences: {
+                heading: 'Who this message is strongest for',
+                body: 'This direction helps people imagine the app as a steady family support tool, not just another health-tech promise.',
+                items: [
+                  { title: 'Adult children helping parents', body: 'A single place for the facts reduces repeated calls, confusion, and last-minute searching.' },
+                  { title: 'Caregivers and spouses', body: 'The app helps daily helpers feel less dependent on memory during appointments or emergencies.' },
+                  { title: 'People managing several conditions', body: 'Important details stay structured and easier to review over time.' }
+                ]
+              },
+              faq: {
+                heading: 'Questions families will ask',
+                body: 'Use the page to reduce hesitation and answer the practical concerns that show up before download or purchase.',
+                items: [
+                  { question: 'Is this only for emergencies?', answer: 'No. The value starts long before emergencies. It also helps with appointments, medication checks, caregiving routines, and travel.' },
+                  { question: 'Will older adults be able to use it?', answer: 'That is one of the core goals. The product direction emphasizes readability, clear structure, and lower stress interaction.' },
+                  { question: 'Can family members use it to stay organized?', answer: 'Yes. The page should position it as a practical record system that makes caregiving easier and faster.' }
+                ]
+              },
+              cta: {
+                kicker: 'Make the launch page feel human',
+                heading: 'Show how the app helps real families before, during, and after stressful moments.',
+                body: 'This preset is better when you want the website to feel warmer, more relatable, and immediately useful to caregivers and loved ones.',
+                primaryLabel: 'Request walkthrough',
+                primaryHref: demoHref,
+                secondaryLabel: 'Review privacy',
+                secondaryHref: 'privacy-policy.html'
+              }
+            }
+          };
+        }
+
+        if (presetId === 'privacy') {
+          return {
+            theme: 'clinical',
+            activePreset: 'privacy',
+            selectedSection: 'hero',
+            sections: [
+              { id: 'hero', visible: true, style: 'statement' },
+              { id: 'proof', visible: true, style: 'band' },
+              { id: 'features', visible: true, style: 'split' },
+              { id: 'audiences', visible: true, style: 'bands' },
+              { id: 'faq', visible: true, style: 'accordion' },
+              { id: 'cta', visible: true, style: 'inline' }
+            ],
+            page: {
+              primaryNavCtaLabel: 'Ask about launch',
+              primaryNavCtaHref: launchHref
+            },
+            content: {
+              hero: {
+                eyebrow: 'Private, local, ready when needed',
+                title: 'Make trust part of the product story, not something people have to assume.',
+                highlight: 'trust part of the product story',
+                body: 'MyRecordsMyHealth is built to keep critical health details organized, accessible offline, and easier to control so people feel safer using it before they ever need it in an emergency.',
+                primaryLabel: 'Ask about launch',
+                primaryHref: launchHref,
+                secondaryLabel: 'Review privacy',
+                secondaryHref: 'privacy-policy.html',
+                note: 'A strong launch page should make privacy, clarity, and readiness feel like first-class product benefits.',
+                stats: [
+                  { label: 'Local control', value: 'Privacy first' },
+                  { label: 'No signal needed', value: 'Offline ready' },
+                  { label: 'Trust faster', value: 'Clear structure' }
+                ]
+              },
+              proof: {
+                items: ['Offline-first access', 'Local privacy controls', 'Clear emergency record summary', 'Support page and privacy page ready']
+              },
+              features: {
+                heading: 'Trust-building points the website should emphasize',
+                body: 'This direction is strongest when you want a more credible, grounded page that answers practical buyer concerns without hype.',
+                items: [
+                  { title: 'Access without hunting', body: 'Important facts stay organized and easier to retrieve when care teams, families, or the user need answers fast.' },
+                  { title: 'Privacy framed in plain language', body: 'Explain how the app handles information and what stays under the user’s control in language normal people can understand.' },
+                  { title: 'Useful before a crisis', body: 'The message should show value in appointments, travel, caregiving, and everyday organization, not only worst-case scenarios.' }
+                ]
+              },
+              audiences: {
+                heading: 'Buyers who respond to clarity and trust',
+                body: 'A more trust-centered message often works better for careful buyers, families, and partners who need to understand the product before they commit.',
+                items: [
+                  { title: 'Privacy-conscious users', body: 'They want clear handling expectations, not vague promises.' },
+                  { title: 'Caregivers comparing options', body: 'They need to see a practical, believable reason this app will reduce stress.' },
+                  { title: 'Partners and advocates', body: 'They need a page that sounds responsible, useful, and ready for public launch.' }
+                ]
+              },
+              faq: {
+                heading: 'Questions that build confidence',
+                body: 'Answering these clearly can remove a surprising amount of hesitation on the page.',
+                items: [
+                  { question: 'Why emphasize privacy so early on the page?', answer: 'Because health information is sensitive and people decide quickly whether they trust a product enough to keep reading.' },
+                  { question: 'Does the app still help in everyday situations?', answer: 'Yes. The strongest message is that the app is useful daily and becomes even more valuable in stressful or urgent moments.' },
+                  { question: 'Can this direction still feel warm and human?', answer: 'Yes. Clarity and trust do not need to feel cold. They simply make the promise more believable.' }
+                ]
+              },
+              cta: {
+                kicker: 'Lead with confidence',
+                heading: 'Use a more credible message when trust and readiness are the deciding factors.',
+                body: 'This preset sharpens the launch page around privacy, clarity, and practical value so the product promise feels believable on first read.',
+                primaryLabel: 'Ask about launch',
+                primaryHref: launchHref,
+                secondaryLabel: 'Open support',
+                secondaryHref: 'support.html'
+              }
+            }
+          };
+        }
+
+        if (presetId === 'premium') {
+          return {
+            theme: 'executive',
+            activePreset: 'premium',
+            selectedSection: 'hero',
+            sections: [
+              { id: 'hero', visible: true, style: 'spotlight' },
+              { id: 'proof', visible: true, style: 'band' },
+              { id: 'features', visible: true, style: 'split' },
+              { id: 'audiences', visible: true, style: 'bands' },
+              { id: 'faq', visible: true, style: 'columns' },
+              { id: 'cta', visible: true, style: 'inline' }
+            ],
+            page: {
+              primaryNavCtaLabel: 'Request launch access',
+              primaryNavCtaHref: launchHref
+            },
+            content: {
+              hero: {
+                eyebrow: 'Premium launch direction',
+                title: 'Turn a critical-health utility into a brand people trust in seconds.',
+                highlight: 'trust in seconds',
+                body: 'This direction frames MyRecordsMyHealth as a premium, high-confidence product experience for launch partners, early adopters, and buyers who need clarity fast.',
+                primaryLabel: 'Request launch access',
+                primaryHref: launchHref,
+                secondaryLabel: 'Open support',
+                secondaryHref: 'support.html',
+                note: 'Use this when you want the public page to feel more polished, more premium, and more launch-ready immediately.',
+                stats: [
+                  { label: 'Visual confidence', value: 'Premium feel' },
+                  { label: 'Critical utility', value: 'Real-world use' },
+                  { label: 'Launch-ready', value: 'Public-facing' }
+                ]
+              },
+              proof: {
+                items: ['Premium dark presentation', 'Offline-first story', 'Caregiver and travel relevance', 'Support + privacy pages included']
+              },
+              features: {
+                heading: 'A stronger launch-facing framing',
+                body: 'This version feels more elevated and brand-forward while still keeping the product promise grounded in real utility.',
+                items: [
+                  { title: 'Designed to look launch-ready', body: 'The darker premium system gives the page more contrast, more drama, and a stronger public-facing feel.' },
+                  { title: 'Still rooted in practical benefit', body: 'The message stays centered on urgent access to the facts people need most: medications, allergies, conditions, contacts, and notes.' },
+                  { title: 'More flexible for public rollout', body: 'This direction can support launch announcements, partner intros, and premium positioning more naturally.' }
+                ]
+              },
+              audiences: {
+                heading: 'Who this style sells to best',
+                body: 'Choose this when the page needs to feel more premium while still connecting to the real-world health use case.',
+                items: [
+                  { title: 'Early adopters', body: 'People who expect polished presentation alongside strong product utility.' },
+                  { title: 'Partners and sponsors', body: 'A more premium page can help the brand feel more established and more investor-facing.' },
+                  { title: 'Launch audiences', body: 'This direction works well when the page itself is part of the broader launch story.' }
+                ]
+              },
+              faq: {
+                heading: 'Questions before public launch',
+                body: 'This version works best when the site needs to balance polish, trust, and practical benefit without becoming generic.',
+                items: [
+                  { question: 'Will a premium style hurt the human side of the brand?', answer: 'Not if the copy stays grounded in caregiving, emergency readiness, and simple usefulness.' },
+                  { question: 'Can this still migrate to Cloudflare later?', answer: 'Yes. The builder exports a standalone HTML file suitable for static hosting.' },
+                  { question: 'Is this style only for investors?', answer: 'No. It is still consumer-friendly; it just presents the brand with more contrast and confidence.' }
+                ]
+              },
+              cta: {
+                kicker: 'Push the page further',
+                heading: 'Use the most launch-ready visual direction when the brand needs more edge and polish.',
+                body: 'This preset aims for a more premium landing experience while keeping the core value understandable on first scan.',
+                primaryLabel: 'Request launch access',
+                primaryHref: launchHref,
+                secondaryLabel: 'Review privacy',
+                secondaryHref: 'privacy-policy.html'
+              }
+            }
+          };
+        }
+
+        return {
+          theme: 'clinical',
+          activePreset: 'emergency',
+          selectedSection: 'hero',
+          sections: [
+            { id: 'hero', visible: true, style: 'statement' },
+            { id: 'proof', visible: true, style: 'band' },
+            { id: 'features', visible: true, style: 'split' },
+            { id: 'audiences', visible: true, style: 'bands' },
+            { id: 'faq', visible: true, style: 'accordion' },
+            { id: 'cta', visible: true, style: 'inline' }
+          ],
+          page: {
+            primaryNavCtaLabel: 'Get launch updates',
+            primaryNavCtaHref: launchHref
+          },
+          content: {
+            hero: {
+              eyebrow: 'Emergency-ready medical facts',
+              title: 'Have the right health details ready before panic takes over.',
+              highlight: 'before panic takes over',
+              body: 'MyRecordsMyHealth puts medications, allergies, diagnoses, emergency contacts, insurance details, and critical notes in one organized place so people can move faster when care decisions cannot wait.',
+              primaryLabel: 'Get launch updates',
+              primaryHref: launchHref,
+              secondaryLabel: 'Open support',
+              secondaryHref: 'support.html',
+              note: 'Built for urgent care moments, hospital visits, travel, caregiving, and the everyday need to stay prepared.',
+              stats: [
+                { label: 'Fast emergency view', value: 'Seconds matter' },
+                { label: 'No connection needed', value: 'Offline ready' },
+                { label: 'Sensitive data handled carefully', value: 'Privacy first' }
+              ]
+            },
+            proof: {
+              items: ['Emergency summary in seconds', 'Offline-first access', 'Readable for caregivers and families', 'Privacy-centered product story']
+            },
+            features: {
+              heading: 'What the public page should make instantly believable',
+              body: 'Lead with usefulness first. If the page feels clear, grounded, and urgent without sounding exaggerated, the product promise becomes much easier to trust.',
+              items: [
+                { title: 'Critical facts without digging', body: 'Make it obvious that medications, allergies, conditions, contacts, and notes are easier to find when stress is high.' },
+                { title: 'Useful in emergencies and normal life', body: 'The story should work for hospital visits, travel, caregiving, checkups, and daily health organization.' },
+                { title: 'Built for real people under pressure', body: 'Accessibility, strong readability, and calmer information structure are part of the value, not side details.' }
+              ]
+            },
+            audiences: {
+              heading: 'Who should feel seen immediately',
+              body: 'This direction is strongest when the page needs to speak fast and clearly to people who may one day need answers without warning.',
+              items: [
+                { title: 'Caregivers and family helpers', body: 'They need one dependable place for the facts when helping someone through an appointment, illness, or emergency.' },
+                { title: 'Seniors and medically complex users', body: 'The app can reduce friction by making important details easier to review and maintain.' },
+                { title: 'Travelers and multilingual households', body: 'Critical information stays easier to access when routines change or communication gets harder.' }
+              ]
+            },
+            faq: {
+              heading: 'Questions the launch page should answer right away',
+              body: 'A good landing page reduces doubt before people have to ask for help or schedule a demo.',
+              items: [
+                { question: 'Why is this better than notes or screenshots?', answer: 'Because the information is structured around moments when speed, clarity, and reduced confusion matter most.' },
+                { question: 'Is it only for emergencies?', answer: 'No. Emergency readiness is the sharpest proof of value, but the app also helps with everyday organization, travel, appointments, and caregiving.' },
+                { question: 'Can this become a public website later?', answer: 'Yes. The builder can open and export a standalone landing page for static hosting.' }
+              ]
+            },
+            cta: {
+              kicker: 'Make the page work harder from the first screen',
+              heading: 'Choose a stronger launch direction without rebuilding everything from scratch.',
+              body: 'This preset pushes the page toward emergency readiness, clarity, and practical trust so the message lands faster the first time someone sees it.',
+              primaryLabel: 'Get launch updates',
+              primaryHref: launchHref,
+              secondaryLabel: 'Review privacy',
+              secondaryHref: 'privacy-policy.html'
+            }
+          }
+        };
+      }
+
+      function applyPreset(presetId) {
+        const presetState = buildPresetState(presetId);
+        state = {
+          ...state,
+          theme: presetState.theme,
+          activePreset: presetState.activePreset,
+          selectedSection: presetState.selectedSection,
+          page: {
+            ...state.page,
+            ...presetState.page
+          },
+          sections: deepClone(presetState.sections),
+          content: {
+            hero: { ...defaultState.content.hero, ...presetState.content.hero },
+            proof: { ...defaultState.content.proof, ...presetState.content.proof },
+            features: { ...defaultState.content.features, ...presetState.content.features },
+            audiences: { ...defaultState.content.audiences, ...presetState.content.audiences },
+            faq: { ...defaultState.content.faq, ...presetState.content.faq },
+            cta: { ...defaultState.content.cta, ...presetState.content.cta }
+          }
+        };
+        saveState('Preset loaded.');
+        renderAll();
+      }
+
+      function renderThemeOptions() {
+        themeOptions.innerHTML = Object.entries(THEME_OPTIONS).map(([key, theme]) => {
+          const activeClass = state.theme === key ? 'active' : '';
+          return `
+            <button class="pill-button ${activeClass}" type="button" data-theme="${key}">
+              <strong>${escapeHtml(theme.label)}</strong>
+              <span>${escapeHtml(theme.description)}</span>
+            </button>
+          `;
+        }).join('');
+      }
+
+      function renderPresetOptions() {
+        presetOptions.innerHTML = Object.entries(PRESET_OPTIONS).map(([key, preset]) => {
+          const activeClass = state.activePreset === key ? 'active' : '';
+          return `
+            <button class="preset-card ${activeClass}" type="button" data-preset="${key}">
+              <strong>${escapeHtml(preset.label)}</strong>
+              <span>${escapeHtml(preset.description)}</span>
+            </button>
+          `;
+        }).join('');
+      }
+
+      function renderViewSwitch() {
+        const views = [
+          { id: 'desktop', label: 'Desktop' },
+          { id: 'tablet', label: 'Tablet' },
+          { id: 'mobile', label: 'Mobile' }
+        ];
+        viewSwitch.innerHTML = views.map((view) => `
+          <button class="view-button ${state.view === view.id ? 'active' : ''}" type="button" data-view="${view.id}">${view.label}</button>
+        `).join('');
+        previewFrame.dataset.view = state.view;
+      }
+
+      function formatStyleLabel(style) {
+        return String(style ?? '')
+          .replace(/[-_]/g, ' ')
+          .replace(/\b\w/g, (letter) => letter.toUpperCase());
+      }
+
+      function selectSection(sectionId, options = {}) {
+        if (!SECTION_META[sectionId]) return;
+        state.selectedSection = sectionId;
+        renderSectionList();
+        renderQuickEdit();
+        renderInspector();
+        if (options.renderPreview) {
+          renderPreview();
+        }
+      }
+
+      function renderQuickEditField(field) {
+        const value = String(getByPath(state, field.path) ?? '');
+        const fullWidthClass = field.fullWidth ? ' full-width' : '';
+        if (field.type === 'textarea') {
+          return `
+            <label class="field${fullWidthClass}">
+              <span>${escapeHtml(field.label)}</span>
+              <textarea rows="${field.rows || 3}" data-path="${escapeHtml(field.path)}" data-save-message="${escapeHtml(field.saveMessage)}">${escapeHtml(value)}</textarea>
+            </label>
+          `;
+        }
+        return `
+          <label class="field${fullWidthClass}">
+            <span>${escapeHtml(field.label)}</span>
+            <input type="text" value="${escapeHtml(value)}" data-path="${escapeHtml(field.path)}" data-save-message="${escapeHtml(field.saveMessage)}" />
+          </label>
+        `;
+      }
+
+      function getQuickEditFields() {
+        if (state.selectedSection === 'hero') {
+          return [
+            { label: 'Site name', path: 'page.siteName', saveMessage: 'Site name updated.' },
+            { label: 'Top button', path: 'page.primaryNavCtaLabel', saveMessage: 'Navigation CTA updated.' },
+            { label: 'Hero headline', path: 'content.hero.title', type: 'textarea', rows: 3, fullWidth: true, saveMessage: 'Hero headline updated.' },
+            { label: 'Hero body', path: 'content.hero.body', type: 'textarea', rows: 4, fullWidth: true, saveMessage: 'Hero body updated.' },
+            { label: 'Main button', path: 'content.hero.primaryLabel', saveMessage: 'Hero button updated.' },
+            { label: 'Support email', path: 'page.supportEmail', saveMessage: 'Support email updated.' }
+          ];
+        }
+
+        if (state.selectedSection === 'proof') {
+          return [
+            { label: 'Site name', path: 'page.siteName', saveMessage: 'Site name updated.' },
+            ...state.content.proof.items.slice(0, 4).map((_, index) => ({
+              label: `Trust point ${index + 1}`,
+              path: `content.proof.items.${index}`,
+              saveMessage: 'Proof point updated.'
+            }))
+          ];
+        }
+
+        if (state.selectedSection === 'features') {
+          return [
+            { label: 'Section heading', path: 'content.features.heading', fullWidth: true, saveMessage: 'Feature heading updated.' },
+            { label: 'Section intro', path: 'content.features.body', type: 'textarea', rows: 4, fullWidth: true, saveMessage: 'Feature intro updated.' },
+            ...state.content.features.items.slice(0, 2).map((_, index) => ({
+              label: `Feature ${index + 1} title`,
+              path: `content.features.items.${index}.title`,
+              saveMessage: 'Feature updated.'
+            }))
+          ];
+        }
+
+        if (state.selectedSection === 'audiences') {
+          return [
+            { label: 'Section heading', path: 'content.audiences.heading', fullWidth: true, saveMessage: 'Audience heading updated.' },
+            { label: 'Section intro', path: 'content.audiences.body', type: 'textarea', rows: 4, fullWidth: true, saveMessage: 'Audience intro updated.' },
+            ...state.content.audiences.items.slice(0, 2).map((_, index) => ({
+              label: `Audience ${index + 1} title`,
+              path: `content.audiences.items.${index}.title`,
+              saveMessage: 'Audience updated.'
+            }))
+          ];
+        }
+
+        if (state.selectedSection === 'faq') {
+          return [
+            { label: 'Section heading', path: 'content.faq.heading', fullWidth: true, saveMessage: 'FAQ heading updated.' },
+            { label: 'Section intro', path: 'content.faq.body', type: 'textarea', rows: 4, fullWidth: true, saveMessage: 'FAQ intro updated.' },
+            ...state.content.faq.items.slice(0, 2).map((_, index) => ({
+              label: `FAQ ${index + 1} question`,
+              path: `content.faq.items.${index}.question`,
+              saveMessage: 'FAQ updated.'
+            }))
+          ];
+        }
+
+        return [
+          { label: 'CTA kicker', path: 'content.cta.kicker', saveMessage: 'CTA kicker updated.' },
+          { label: 'CTA headline', path: 'content.cta.heading', type: 'textarea', rows: 3, fullWidth: true, saveMessage: 'CTA headline updated.' },
+          { label: 'CTA body', path: 'content.cta.body', type: 'textarea', rows: 4, fullWidth: true, saveMessage: 'CTA body updated.' },
+          { label: 'Primary button', path: 'content.cta.primaryLabel', saveMessage: 'CTA button updated.' },
+          { label: 'Secondary button', path: 'content.cta.secondaryLabel', saveMessage: 'CTA button updated.' }
+        ];
+      }
+
+      function renderQuickEdit() {
+        const meta = SECTION_META[state.selectedSection];
+        const jumpButtons = state.sections.map((section) => {
+          const sectionMeta = SECTION_META[section.id];
+          const activeClass = state.selectedSection === section.id ? 'active' : '';
+          return `
+            <button class="ghost-button quick-jump-button ${activeClass}" type="button" data-jump-section="${section.id}">${escapeHtml(sectionMeta.label)}</button>
+          `;
+        }).join('');
+        const quickFields = getQuickEditFields().map((field) => renderQuickEditField(field)).join('');
+
+        quickEdit.innerHTML = `
+          <div class="builder-callout">
+            <strong>Editing ${escapeHtml(meta.label)}</strong>
+            <span>${escapeHtml(meta.description)} Click the preview blocks on the right or use these quick jumps.</span>
+          </div>
+          <div class="quick-jump-row">${jumpButtons}</div>
+          <div class="field-grid quick-edit-grid">${quickFields}</div>
+        `;
+      }
+
+      function renderSectionList() {
+        sectionList.innerHTML = state.sections.map((section, index) => {
+          const meta = SECTION_META[section.id];
+          const selectedClass = state.selectedSection === section.id ? 'selected' : '';
+          const hiddenClass = section.visible ? '' : 'hidden';
+          const styleOptions = meta.styles.map((style) => `
+            <option value="${style}" ${section.style === style ? 'selected' : ''}>${escapeHtml(formatStyleLabel(style))}</option>
+          `).join('');
+          return `
+            <div class="section-card ${selectedClass} ${hiddenClass}">
+              <div class="section-main">
+                <button class="section-select" type="button" data-select-section="${section.id}">
+                  <strong>${escapeHtml(meta.label)}</strong>
+                  <span>${escapeHtml(meta.description)}</span>
+                </button>
+                <div class="section-actions">
+                  <span class="visibility-chip ${section.visible ? 'is-visible' : 'is-hidden'}">${section.visible ? 'Visible' : 'Hidden'}</span>
+                  <button class="icon-button" type="button" data-toggle-section="${section.id}" aria-label="Toggle ${escapeHtml(meta.label)}">${section.visible ? '👁' : '🚫'}</button>
+                  <button class="icon-button" type="button" data-move-section="up:${section.id}" ${index === 0 ? 'disabled' : ''} aria-label="Move ${escapeHtml(meta.label)} up">↑</button>
+                  <button class="icon-button" type="button" data-move-section="down:${section.id}" ${index === state.sections.length - 1 ? 'disabled' : ''} aria-label="Move ${escapeHtml(meta.label)} down">↓</button>
+                </div>
+              </div>
+              <select class="section-style" data-style-section="${section.id}">
+                ${styleOptions}
+              </select>
+              <p class="section-style-note">Layout style</p>
+            </div>
+          `;
+        }).join('');
+      }
+
+      function renderBaseSettings() {
+        return `
+          <div class="field-grid">
+            <label class="field">
+              <span>Site name</span>
+              <input type="text" value="${escapeHtml(state.page.siteName)}" data-path="page.siteName" data-save-message="Site name updated." />
+            </label>
+            <label class="field">
+              <span>Support email</span>
+              <input type="text" value="${escapeHtml(state.page.supportEmail)}" data-path="page.supportEmail" data-save-message="Support email updated." />
+            </label>
+            <label class="field">
+              <span>Top nav CTA label</span>
+              <input type="text" value="${escapeHtml(state.page.primaryNavCtaLabel)}" data-path="page.primaryNavCtaLabel" data-save-message="Navigation CTA updated." />
+            </label>
+            <label class="field">
+              <span>Top nav CTA link</span>
+              <input type="text" value="${escapeHtml(state.page.primaryNavCtaHref)}" data-path="page.primaryNavCtaHref" data-save-message="Navigation CTA link updated." />
+            </label>
+          </div>
+        `;
+      }
+
+      function renderHeroInspector() {
+        const stats = state.content.hero.stats.map((item, index) => `
+          <div class="item-card">
+            <div class="item-card-head">
+              <h4>Hero stat ${index + 1}</h4>
+              <button class="remove-button" type="button" data-remove-item="hero:${index}">Remove</button>
+            </div>
+            <label class="field">
+              <span>Label</span>
+              <input type="text" value="${escapeHtml(item.label)}" data-path="content.hero.stats.${index}.label" data-save-message="Hero stat updated." />
+            </label>
+            <label class="field">
+              <span>Value</span>
+              <input type="text" value="${escapeHtml(item.value)}" data-path="content.hero.stats.${index}.value" data-save-message="Hero stat updated." />
+            </label>
+          </div>
+        `).join('');
+
+        return `
+          ${renderBaseSettings()}
+          <label class="field">
+            <span>Eyebrow</span>
+            <input type="text" value="${escapeHtml(state.content.hero.eyebrow)}" data-path="content.hero.eyebrow" data-save-message="Hero eyebrow updated." />
+          </label>
+          <label class="field">
+            <span>Headline</span>
+            <textarea rows="3" data-path="content.hero.title" data-save-message="Hero headline updated.">${escapeHtml(state.content.hero.title)}</textarea>
+          </label>
+          <label class="field">
+            <span>Highlight phrase</span>
+            <input type="text" value="${escapeHtml(state.content.hero.highlight)}" data-path="content.hero.highlight" data-save-message="Hero highlight updated." />
+          </label>
+          <label class="field">
+            <span>Body copy</span>
+            <textarea rows="4" data-path="content.hero.body" data-save-message="Hero body updated.">${escapeHtml(state.content.hero.body)}</textarea>
+          </label>
+          <div class="field-grid">
+            <label class="field">
+              <span>Primary button label</span>
+              <input type="text" value="${escapeHtml(state.content.hero.primaryLabel)}" data-path="content.hero.primaryLabel" data-save-message="Hero button updated." />
+            </label>
+            <label class="field">
+              <span>Primary button link</span>
+              <input type="text" value="${escapeHtml(state.content.hero.primaryHref)}" data-path="content.hero.primaryHref" data-save-message="Hero button link updated." />
+            </label>
+            <label class="field">
+              <span>Secondary button label</span>
+              <input type="text" value="${escapeHtml(state.content.hero.secondaryLabel)}" data-path="content.hero.secondaryLabel" data-save-message="Hero button updated." />
+            </label>
+            <label class="field">
+              <span>Secondary button link</span>
+              <input type="text" value="${escapeHtml(state.content.hero.secondaryHref)}" data-path="content.hero.secondaryHref" data-save-message="Hero button link updated." />
+            </label>
+          </div>
+          <label class="field">
+            <span>Supporting note</span>
+            <input type="text" value="${escapeHtml(state.content.hero.note)}" data-path="content.hero.note" data-save-message="Hero note updated." />
+          </label>
+          ${stats}
+          <button class="add-button" type="button" data-add-item="hero">Add hero stat</button>
+        `;
+      }
+
+      function renderProofInspector() {
+        const items = state.content.proof.items.map((item, index) => `
+          <div class="item-card">
+            <div class="item-card-head">
+              <h4>Trust point ${index + 1}</h4>
+              <button class="remove-button" type="button" data-remove-item="proof:${index}">Remove</button>
+            </div>
+            <label class="field">
+              <span>Text</span>
+              <input type="text" value="${escapeHtml(item)}" data-path="content.proof.items.${index}" data-save-message="Proof point updated." />
+            </label>
+          </div>
+        `).join('');
+        return `
+          ${items}
+          <button class="add-button" type="button" data-add-item="proof">Add trust point</button>
+        `;
+      }
+
+      function renderFeaturesInspector() {
+        const items = state.content.features.items.map((item, index) => `
+          <div class="item-card">
+            <div class="item-card-head">
+              <h4>Feature ${index + 1}</h4>
+              <button class="remove-button" type="button" data-remove-item="features:${index}">Remove</button>
+            </div>
+            <label class="field">
+              <span>Title</span>
+              <input type="text" value="${escapeHtml(item.title)}" data-path="content.features.items.${index}.title" data-save-message="Feature updated." />
+            </label>
+            <label class="field">
+              <span>Description</span>
+              <textarea rows="3" data-path="content.features.items.${index}.body" data-save-message="Feature updated.">${escapeHtml(item.body)}</textarea>
+            </label>
+          </div>
+        `).join('');
+        return `
+          <label class="field">
+            <span>Section heading</span>
+            <input type="text" value="${escapeHtml(state.content.features.heading)}" data-path="content.features.heading" data-save-message="Feature heading updated." />
+          </label>
+          <label class="field">
+            <span>Section intro</span>
+            <textarea rows="3" data-path="content.features.body" data-save-message="Feature intro updated.">${escapeHtml(state.content.features.body)}</textarea>
+          </label>
+          ${items}
+          <button class="add-button" type="button" data-add-item="features">Add feature</button>
+        `;
+      }
+
+      function renderAudiencesInspector() {
+        const items = state.content.audiences.items.map((item, index) => `
+          <div class="item-card">
+            <div class="item-card-head">
+              <h4>Audience ${index + 1}</h4>
+              <button class="remove-button" type="button" data-remove-item="audiences:${index}">Remove</button>
+            </div>
+            <label class="field">
+              <span>Title</span>
+              <input type="text" value="${escapeHtml(item.title)}" data-path="content.audiences.items.${index}.title" data-save-message="Audience updated." />
+            </label>
+            <label class="field">
+              <span>Description</span>
+              <textarea rows="3" data-path="content.audiences.items.${index}.body" data-save-message="Audience updated.">${escapeHtml(item.body)}</textarea>
+            </label>
+          </div>
+        `).join('');
+        return `
+          <label class="field">
+            <span>Section heading</span>
+            <input type="text" value="${escapeHtml(state.content.audiences.heading)}" data-path="content.audiences.heading" data-save-message="Audience heading updated." />
+          </label>
+          <label class="field">
+            <span>Section intro</span>
+            <textarea rows="3" data-path="content.audiences.body" data-save-message="Audience intro updated.">${escapeHtml(state.content.audiences.body)}</textarea>
+          </label>
+          ${items}
+          <button class="add-button" type="button" data-add-item="audiences">Add audience</button>
+        `;
+      }
+
+      function renderFaqInspector() {
+        const items = state.content.faq.items.map((item, index) => `
+          <div class="item-card">
+            <div class="item-card-head">
+              <h4>FAQ ${index + 1}</h4>
+              <button class="remove-button" type="button" data-remove-item="faq:${index}">Remove</button>
+            </div>
+            <label class="field">
+              <span>Question</span>
+              <input type="text" value="${escapeHtml(item.question)}" data-path="content.faq.items.${index}.question" data-save-message="FAQ updated." />
+            </label>
+            <label class="field">
+              <span>Answer</span>
+              <textarea rows="4" data-path="content.faq.items.${index}.answer" data-save-message="FAQ updated.">${escapeHtml(item.answer)}</textarea>
+            </label>
+          </div>
+        `).join('');
+        return `
+          <label class="field">
+            <span>Section heading</span>
+            <input type="text" value="${escapeHtml(state.content.faq.heading)}" data-path="content.faq.heading" data-save-message="FAQ heading updated." />
+          </label>
+          <label class="field">
+            <span>Section intro</span>
+            <textarea rows="3" data-path="content.faq.body" data-save-message="FAQ intro updated.">${escapeHtml(state.content.faq.body)}</textarea>
+          </label>
+          ${items}
+          <button class="add-button" type="button" data-add-item="faq">Add FAQ</button>
+        `;
+      }
+
+      function renderCtaInspector() {
+        return `
+          <label class="field">
+            <span>Kicker</span>
+            <input type="text" value="${escapeHtml(state.content.cta.kicker)}" data-path="content.cta.kicker" data-save-message="CTA kicker updated." />
+          </label>
+          <label class="field">
+            <span>Headline</span>
+            <textarea rows="3" data-path="content.cta.heading" data-save-message="CTA headline updated.">${escapeHtml(state.content.cta.heading)}</textarea>
+          </label>
+          <label class="field">
+            <span>Body copy</span>
+            <textarea rows="4" data-path="content.cta.body" data-save-message="CTA body updated.">${escapeHtml(state.content.cta.body)}</textarea>
+          </label>
+          <div class="field-grid">
+            <label class="field">
+              <span>Primary button label</span>
+              <input type="text" value="${escapeHtml(state.content.cta.primaryLabel)}" data-path="content.cta.primaryLabel" data-save-message="CTA button updated." />
+            </label>
+            <label class="field">
+              <span>Primary button link</span>
+              <input type="text" value="${escapeHtml(state.content.cta.primaryHref)}" data-path="content.cta.primaryHref" data-save-message="CTA button link updated." />
+            </label>
+            <label class="field">
+              <span>Secondary button label</span>
+              <input type="text" value="${escapeHtml(state.content.cta.secondaryLabel)}" data-path="content.cta.secondaryLabel" data-save-message="CTA button updated." />
+            </label>
+            <label class="field">
+              <span>Secondary button link</span>
+              <input type="text" value="${escapeHtml(state.content.cta.secondaryHref)}" data-path="content.cta.secondaryHref" data-save-message="CTA button link updated." />
+            </label>
+          </div>
+        `;
+      }
+
+      function renderInspector() {
+        const meta = SECTION_META[state.selectedSection];
+        let body = '';
+        if (state.selectedSection === 'hero') body = renderHeroInspector();
+        if (state.selectedSection === 'proof') body = renderProofInspector();
+        if (state.selectedSection === 'features') body = renderFeaturesInspector();
+        if (state.selectedSection === 'audiences') body = renderAudiencesInspector();
+        if (state.selectedSection === 'faq') body = renderFaqInspector();
+        if (state.selectedSection === 'cta') body = renderCtaInspector();
+
+        inspector.innerHTML = `
+          <div class="item-card">
+            <div class="item-card-head">
+              <h4>${escapeHtml(meta.label)}</h4>
+            </div>
+            <p class="helper-note" style="margin: 0 0 10px;">${escapeHtml(meta.description)}</p>
+            ${body}
+          </div>
+        `;
+      }
+
+      function getPreviewSectionAttributes(sectionId, classNames, anchorId, interactive) {
+        const selectedClass = interactive && state.selectedSection === sectionId ? ' is-editor-selected' : '';
+        const interactiveClass = interactive ? ` preview-edit-target${selectedClass}` : '';
+        const dataAttribute = interactive ? ` data-preview-section="${sectionId}"` : '';
+        return `id="${anchorId}" class="${classNames}${interactiveClass}"${dataAttribute}`;
+      }
+
+      function renderProofSection(sectionStyle, interactive) {
+        const items = state.content.proof.items.map((item) => `<span class="proof-chip">${escapeHtml(item)}</span>`).join('');
+        return sectionStyle === 'band'
+          ? `<section ${getPreviewSectionAttributes('proof', 'proof-band', 'proof', interactive)}><div class="shell"><div class="proof-band-inner">${items}</div></div></section>`
+          : `<section ${getPreviewSectionAttributes('proof', 'proof-strip', 'proof', interactive)}><div class="shell"><div class="proof-strip-inner">${items}</div></div></section>`;
+      }
+
+      function renderFeaturesSection(sectionStyle, interactive) {
+        const cards = state.content.features.items.map((item, index) => `
+          <article class="feature-card feature-card-${index + 1}">
+            <div class="feature-index">0${index + 1}</div>
+            <h3>${escapeHtml(item.title)}</h3>
+            <p>${escapeHtml(item.body)}</p>
+          </article>
+        `).join('');
+
+        if (sectionStyle === 'split') {
+          const list = state.content.features.items.map((item) => `
+            <div class="feature-split-item">
+              <strong>${escapeHtml(item.title)}</strong>
+              <p>${escapeHtml(item.body)}</p>
+            </div>
+          `).join('');
+          return `
+            <section ${getPreviewSectionAttributes('features', 'section shell split-section', 'features', interactive)}>
+              <div class="section-intro-card">
+                <span class="section-tag">Features</span>
+                <h2>${escapeHtml(state.content.features.heading)}</h2>
+                <p>${escapeHtml(state.content.features.body)}</p>
+              </div>
+              <div class="feature-split-list">${list}</div>
+            </section>
+          `;
+        }
+
+        return `
+          <section ${getPreviewSectionAttributes('features', 'section shell', 'features', interactive)}>
+            <div class="section-copy">
+              <span class="section-tag">Features</span>
+              <h2>${escapeHtml(state.content.features.heading)}</h2>
+              <p>${escapeHtml(state.content.features.body)}</p>
+            </div>
+            <div class="feature-grid">${cards}</div>
+          </section>
+        `;
+      }
+
+      function renderAudiencesSection(sectionStyle, interactive) {
+        const items = state.content.audiences.items.map((item) => `
+          <article class="audience-card">
+            <h3>${escapeHtml(item.title)}</h3>
+            <p>${escapeHtml(item.body)}</p>
+          </article>
+        `).join('');
+
+        if (sectionStyle === 'bands') {
+          const bands = state.content.audiences.items.map((item) => `
+            <article class="audience-band-card">
+              <div>
+                <strong>${escapeHtml(item.title)}</strong>
+              </div>
+              <p>${escapeHtml(item.body)}</p>
+            </article>
+          `).join('');
+
+          return `
+            <section ${getPreviewSectionAttributes('audiences', 'section shell audience-band-shell', 'audiences', interactive)}>
+              <div class="section-copy narrow">
+                <span class="section-tag">Who it helps</span>
+                <h2>${escapeHtml(state.content.audiences.heading)}</h2>
+                <p>${escapeHtml(state.content.audiences.body)}</p>
+              </div>
+              <div class="audience-band-list">${bands}</div>
+            </section>
+          `;
+        }
+
+        return `
+          <section ${getPreviewSectionAttributes('audiences', 'section shell', 'audiences', interactive)}>
+            <div class="section-copy narrow">
+              <span class="section-tag">Who it helps</span>
+              <h2>${escapeHtml(state.content.audiences.heading)}</h2>
+              <p>${escapeHtml(state.content.audiences.body)}</p>
+            </div>
+            <div class="audience-grid">${items}</div>
+          </section>
+        `;
+      }
+
+      function renderFaqSection(sectionStyle, interactive) {
+        if (sectionStyle === 'columns') {
+          const cards = state.content.faq.items.map((item) => `
+            <article class="faq-card">
+              <h3>${escapeHtml(item.question)}</h3>
+              <p>${escapeHtml(item.answer)}</p>
+            </article>
+          `).join('');
+          return `
+            <section ${getPreviewSectionAttributes('faq', 'section shell', 'faq', interactive)}>
+              <div class="section-copy narrow">
+                <span class="section-tag">FAQ</span>
+                <h2>${escapeHtml(state.content.faq.heading)}</h2>
+                <p>${escapeHtml(state.content.faq.body)}</p>
+              </div>
+              <div class="faq-grid">${cards}</div>
+            </section>
+          `;
+        }
+
+        const items = state.content.faq.items.map((item, index) => `
+          <details class="faq-item" ${index === 0 ? 'open' : ''}>
+            <summary>${escapeHtml(item.question)}</summary>
+            <p>${escapeHtml(item.answer)}</p>
+          </details>
+        `).join('');
+        return `
+          <section ${getPreviewSectionAttributes('faq', 'section shell faq-shell', 'faq', interactive)}>
+            <div class="section-copy narrow">
+              <span class="section-tag">FAQ</span>
+              <h2>${escapeHtml(state.content.faq.heading)}</h2>
+              <p>${escapeHtml(state.content.faq.body)}</p>
+            </div>
+            <div class="faq-list">${items}</div>
+          </section>
+        `;
+      }
+
+      function renderCtaSection(sectionStyle, interactive) {
+        if (sectionStyle === 'inline') {
+          return `
+            <section ${getPreviewSectionAttributes('cta', 'shell cta-inline-shell', 'cta', interactive)}>
+              <div class="cta-inline">
+                <div>
+                  <span class="section-tag">${escapeHtml(state.content.cta.kicker)}</span>
+                  <h2>${escapeHtml(state.content.cta.heading)}</h2>
+                  <p>${escapeHtml(state.content.cta.body)}</p>
+                </div>
+                <div class="cta-row">
+                  <a class="btn btn-primary" href="${escapeHtml(state.content.cta.primaryHref)}">${escapeHtml(state.content.cta.primaryLabel)}</a>
+                  <a class="btn btn-secondary" href="${escapeHtml(state.content.cta.secondaryHref)}">${escapeHtml(state.content.cta.secondaryLabel)}</a>
+                </div>
+              </div>
+            </section>
+          `;
+        }
+
+        return `
+          <section ${getPreviewSectionAttributes('cta', 'shell cta-box-shell', 'cta', interactive)}>
+            <div class="cta-box">
+              <span class="section-tag">${escapeHtml(state.content.cta.kicker)}</span>
+              <h2>${escapeHtml(state.content.cta.heading)}</h2>
+              <p>${escapeHtml(state.content.cta.body)}</p>
+              <div class="cta-row center">
+                <a class="btn btn-primary" href="${escapeHtml(state.content.cta.primaryHref)}">${escapeHtml(state.content.cta.primaryLabel)}</a>
+                <a class="btn btn-secondary" href="${escapeHtml(state.content.cta.secondaryHref)}">${escapeHtml(state.content.cta.secondaryLabel)}</a>
+              </div>
+            </div>
+          </section>
+        `;
+      }
+
+      function renderHeroSection(sectionStyle, interactive) {
+        const heroStats = state.content.hero.stats.map((item) => `
+          <div class="hero-stat-card">
+            <strong>${escapeHtml(item.value)}</strong>
+            <span>${escapeHtml(item.label)}</span>
+          </div>
+        `).join('');
+
+        const highlightedTitle = state.content.hero.highlight
+          ? escapeHtml(state.content.hero.title).replace(escapeHtml(state.content.hero.highlight), `<span>${escapeHtml(state.content.hero.highlight)}</span>`)
+          : escapeHtml(state.content.hero.title);
+
+        if (sectionStyle === 'spotlight') {
+          return `
+            <section ${getPreviewSectionAttributes('hero', 'shell hero hero-spotlight', 'hero', interactive)}>
+              <div class="hero-copy-wrap">
+                <span class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(state.content.hero.eyebrow)}</span>
+                <h1>${highlightedTitle}</h1>
+                <p class="hero-body">${escapeHtml(state.content.hero.body)}</p>
+                <div class="cta-row">
+                  <a class="btn btn-primary" href="${escapeHtml(state.content.hero.primaryHref)}">${escapeHtml(state.content.hero.primaryLabel)}</a>
+                  <a class="btn btn-secondary" href="${escapeHtml(state.content.hero.secondaryHref)}">${escapeHtml(state.content.hero.secondaryLabel)}</a>
+                </div>
+                <p class="hero-note">${escapeHtml(state.content.hero.note)}</p>
+              </div>
+              <div class="hero-spotlight-panel">
+                <div class="hero-panel-head">
+                  <span>Launch framing</span>
+                  <strong>What people should feel</strong>
+                </div>
+                <div class="hero-stat-grid">${heroStats}</div>
+              </div>
+            </section>
+          `;
+        }
+
+        return `
+          <section ${getPreviewSectionAttributes('hero', 'shell hero hero-statement', 'hero', interactive)}>
+            <div class="hero-copy-wrap">
+              <span class="eyebrow"><span class="eyebrow-dot"></span>${escapeHtml(state.content.hero.eyebrow)}</span>
+              <h1>${highlightedTitle}</h1>
+              <p class="hero-body">${escapeHtml(state.content.hero.body)}</p>
+              <div class="cta-row">
+                <a class="btn btn-primary" href="${escapeHtml(state.content.hero.primaryHref)}">${escapeHtml(state.content.hero.primaryLabel)}</a>
+                <a class="btn btn-secondary" href="${escapeHtml(state.content.hero.secondaryHref)}">${escapeHtml(state.content.hero.secondaryLabel)}</a>
+              </div>
+              <p class="hero-note">${escapeHtml(state.content.hero.note)}</p>
+            </div>
+            <div class="hero-stat-grid hero-stat-grid-float">${heroStats}</div>
+          </section>
+        `;
+      }
+
+      function renderPreviewHTML(options = {}) {
+        const interactive = Boolean(options.interactive);
+        const theme = THEME_OPTIONS[state.theme];
+        const sectionHtml = state.sections.filter((section) => section.visible).map((section) => {
+          if (section.id === 'hero') return renderHeroSection(section.style, interactive);
+          if (section.id === 'proof') return renderProofSection(section.style, interactive);
+          if (section.id === 'features') return renderFeaturesSection(section.style, interactive);
+          if (section.id === 'audiences') return renderAudiencesSection(section.style, interactive);
+          if (section.id === 'faq') return renderFaqSection(section.style, interactive);
+          if (section.id === 'cta') return renderCtaSection(section.style, interactive);
+          return '';
+        }).join('');
+
+        const previewScript = interactive ? `<script>
+          document.addEventListener('click', (event) => {
+            const section = event.target.closest('[data-preview-section]');
+            if (!section) return;
+            event.preventDefault();
+            event.stopPropagation();
+            window.parent.postMessage({
+              source: 'website-builder-preview',
+              type: 'select-section',
+              sectionId: section.dataset.previewSection
+            }, '*');
+          });
+        <\/script>` : '';
+
+        return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="./" />
+    <title>${escapeHtml(state.page.siteName)} — Landing Preview</title>
+    <style>
+      :root {
+        color-scheme: ${state.theme === 'executive' ? 'dark' : 'light'};
+        --bg: ${theme.bg};
+        --surface: ${theme.surface};
+        --surface-alt: ${theme.surfaceAlt};
+        --text: ${theme.text};
+        --muted: ${theme.muted};
+        --border: ${theme.border};
+        --hero-start: ${theme.heroStart};
+        --hero-end: ${theme.heroEnd};
+        --accent: ${theme.accent};
+        --accent-strong: ${theme.accentStrong};
+        --accent-soft: ${theme.accentSoft};
+        --danger: ${theme.danger};
+        --shadow: ${theme.shadow};
+        --outline: ${theme.outline};
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 18%, transparent), transparent 28%),
+          radial-gradient(circle at bottom right, color-mix(in srgb, var(--hero-end) 12%, transparent), transparent 34%),
+          linear-gradient(180deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 90%, #ffffff) 100%);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: inherit; }
+      .shell {
+        width: min(1160px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+      .site-head {
+        padding: 24px 0 16px;
+      }
+      .site-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 10px 0;
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+      }
+      .brand-mark {
+        width: 40px;
+        height: 40px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        color: #ffffff;
+        background: linear-gradient(135deg, var(--hero-start), var(--hero-end));
+        box-shadow: 0 16px 32px rgba(0,0,0,0.18);
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+      .nav-links a {
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--muted);
+      }
+      .nav-links .nav-cta {
+        padding: 11px 16px;
+        border-radius: 999px;
+        background: var(--text);
+        color: ${state.theme === 'executive' ? '#0d1523' : '#ffffff'};
+      }
+      .preview-edit-target {
+        position: relative;
+        cursor: pointer;
+      }
+      .preview-edit-target::after {
+        content: 'Edit';
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        padding: 6px 9px;
+        border-radius: 999px;
+        background: rgba(17, 39, 65, 0.82);
+        color: #ffffff;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.16s ease, transform 0.16s ease;
+        transform: translateY(4px);
+      }
+      .preview-edit-target:hover::after,
+      .preview-edit-target.is-editor-selected::after {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .preview-edit-target.is-editor-selected {
+        outline: 3px solid color-mix(in srgb, var(--accent) 64%, #ffffff);
+        outline-offset: 4px;
+      }
+      .hero {
+        position: relative;
+        overflow: hidden;
+        margin-top: 10px;
+        padding: 48px 40px;
+        border-radius: 34px;
+        background:
+          radial-gradient(900px 280px at 90% -6%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 60%),
+          radial-gradient(780px 260px at 0% 100%, color-mix(in srgb, var(--danger) 12%, transparent), transparent 60%),
+          linear-gradient(180deg, var(--hero-start) 0%, var(--hero-end) 100%);
+        color: #ffffff;
+        box-shadow: var(--shadow);
+      }
+      .hero-statement,
+      .hero-spotlight {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(280px, 390px);
+        gap: 34px;
+        align-items: center;
+      }
+      .hero-copy-wrap h1 {
+        margin: 16px 0 14px;
+        font-size: clamp(38px, 6vw, 66px);
+        line-height: 1.02;
+        letter-spacing: -0.055em;
+      }
+      .hero-copy-wrap h1 span {
+        color: var(--accent);
+      }
+      .hero-body {
+        margin: 0;
+        font-size: 19px;
+        color: rgba(255,255,255,0.84);
+        max-width: 640px;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 13px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.16);
+        color: rgba(255,255,255,0.86);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .eyebrow-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--accent);
+        box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 70%, transparent);
+      }
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 28px;
+      }
+      .cta-row.center {
+        justify-content: center;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 52px;
+        padding: 14px 20px;
+        border-radius: 16px;
+        text-decoration: none;
+        font-weight: 800;
+      }
+      .btn-primary {
+        background: #ffffff;
+        color: var(--hero-start);
+        box-shadow: 0 16px 36px rgba(0,0,0,0.18);
+      }
+      .btn-secondary {
+        background: rgba(255,255,255,0.1);
+        color: #ffffff;
+        border: 1px solid rgba(255,255,255,0.2);
+      }
+      .hero-note {
+        margin: 16px 0 0;
+        font-size: 13px;
+        color: rgba(255,255,255,0.68);
+      }
+      .hero-stat-grid {
+        display: grid;
+        gap: 14px;
+      }
+      .hero-stat-grid-float {
+        align-self: stretch;
+      }
+      .hero-stat-card,
+      .hero-spotlight-panel,
+      .section-intro-card,
+      .feature-card,
+      .audience-card,
+      .faq-card,
+      .faq-item,
+      .audience-band-card,
+      .proof-band-inner,
+      .cta-box,
+      .cta-inline,
+      .feature-split-item {
+        border: 1px solid var(--border);
+        background: var(--surface);
+        box-shadow: 0 16px 42px rgba(16, 35, 58, 0.08);
+      }
+      .hero-stat-card {
+        border-radius: 22px;
+        padding: 18px;
+        background: rgba(255,255,255,0.12);
+        border-color: rgba(255,255,255,0.14);
+        box-shadow: none;
+      }
+      .hero-stat-card strong {
+        display: block;
+        font-size: 22px;
+        color: #ffffff;
+      }
+      .hero-stat-card span {
+        display: block;
+        margin-top: 6px;
+        font-size: 13px;
+        color: rgba(255,255,255,0.72);
+      }
+      .hero-spotlight-panel {
+        border-radius: 28px;
+        padding: 22px;
+        background: rgba(255,255,255,0.12);
+        border-color: rgba(255,255,255,0.16);
+        box-shadow: none;
+      }
+      .hero-panel-head span {
+        display: inline-block;
+        padding: 8px 10px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.12);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.78);
+      }
+      .hero-panel-head strong {
+        display: block;
+        margin-top: 14px;
+        font-size: 30px;
+        line-height: 1.05;
+      }
+      .proof-strip,
+      .proof-band {
+        padding-top: 18px;
+      }
+      .proof-strip-inner,
+      .proof-band-inner {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+      }
+      .proof-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: color-mix(in srgb, var(--surface) 82%, #ffffff);
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--text);
+      }
+      .proof-band-inner {
+        justify-content: space-between;
+        gap: 14px;
+        padding: 18px 22px;
+        border-radius: 24px;
+        background: var(--surface);
+      }
+      .section {
+        padding: 74px 0 0;
+      }
+      .section-copy {
+        max-width: 740px;
+        margin-bottom: 24px;
+      }
+      .section-copy.narrow {
+        max-width: 660px;
+      }
+      .section-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent-strong);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .section-copy h2,
+      .cta-box h2,
+      .cta-inline h2,
+      .section-intro-card h2 {
+        margin: 16px 0 10px;
+        font-size: clamp(30px, 4.2vw, 46px);
+        line-height: 1.08;
+        letter-spacing: -0.04em;
+      }
+      .section-copy p,
+      .cta-box p,
+      .cta-inline p,
+      .section-intro-card p {
+        margin: 0;
+        font-size: 17px;
+        color: var(--muted);
+      }
+      .feature-grid,
+      .audience-grid,
+      .faq-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .feature-card,
+      .audience-card,
+      .faq-card {
+        border-radius: 28px;
+        padding: 22px;
+      }
+      .feature-index {
+        display: inline-flex;
+        padding: 8px 10px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent-strong);
+        font-size: 12px;
+        font-weight: 900;
+      }
+      .feature-card h3,
+      .audience-card h3,
+      .faq-card h3 {
+        margin: 18px 0 10px;
+        font-size: 22px;
+        line-height: 1.15;
+        letter-spacing: -0.03em;
+      }
+      .feature-card p,
+      .audience-card p,
+      .faq-card p,
+      .feature-split-item p,
+      .audience-band-card p,
+      .faq-item p {
+        margin: 0;
+        color: var(--muted);
+      }
+      .split-section {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: 20px;
+        align-items: start;
+      }
+      .section-intro-card,
+      .feature-split-item,
+      .audience-band-card,
+      .faq-item,
+      .cta-box,
+      .cta-inline {
+        border-radius: 28px;
+        padding: 24px;
+      }
+      .feature-split-list,
+      .audience-band-list,
+      .faq-list {
+        display: grid;
+        gap: 16px;
+      }
+      .feature-split-item strong,
+      .audience-band-card strong {
+        display: block;
+        font-size: 20px;
+        line-height: 1.15;
+      }
+      .feature-split-item p,
+      .audience-band-card p {
+        margin-top: 10px;
+      }
+      .faq-item summary {
+        cursor: pointer;
+        list-style: none;
+        font-size: 18px;
+        font-weight: 800;
+      }
+      .faq-item summary::-webkit-details-marker { display: none; }
+      .faq-item p { margin-top: 12px; }
+      .cta-box-shell,
+      .cta-inline-shell {
+        padding: 74px 0 90px;
+      }
+      .cta-box {
+        text-align: center;
+        padding: 42px 28px;
+        background:
+          radial-gradient(circle at top, color-mix(in srgb, var(--accent) 16%, transparent), transparent 48%),
+          linear-gradient(180deg, var(--surface) 0%, var(--surface-alt) 100%);
+      }
+      .cta-inline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+      .site-footer {
+        padding: 0 0 36px;
+      }
+      .site-footer-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .site-footer-links {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      @media (max-width: 980px) {
+        .hero-statement,
+        .hero-spotlight,
+        .split-section,
+        .cta-inline,
+        .feature-grid,
+        .audience-grid,
+        .faq-grid {
+          grid-template-columns: 1fr;
+          flex-direction: column;
+        }
+        .hero {
+          padding: 36px 24px;
+        }
+      }
+      @media (max-width: 720px) {
+        .nav-links {
+          gap: 12px;
+        }
+        .site-nav {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        .shell {
+          width: min(1160px, calc(100% - 24px));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-head shell">
+      <nav class="site-nav">
+        <a class="brand" href="#top">
+          <span class="brand-mark">M</span>
+          <span>${escapeHtml(state.page.siteName)}</span>
+        </a>
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#faq">FAQ</a>
+          <a href="support.html">Support</a>
+          <a href="privacy-policy.html">Privacy</a>
+          <a class="nav-cta" href="${escapeHtml(state.page.primaryNavCtaHref)}">${escapeHtml(state.page.primaryNavCtaLabel)}</a>
+        </div>
+      </nav>
+    </header>
+    <main id="top">${sectionHtml}</main>
+    <footer class="site-footer shell">
+      <div class="site-footer-inner">
+        <div>© <span>${new Date().getFullYear()}</span> ${escapeHtml(state.page.siteName)} · ${escapeHtml(state.page.supportEmail)}</div>
+        <div class="site-footer-links">
+          <a href="support.html">Support</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+        </div>
+      </div>
+    </footer>
+    ${previewScript}
+  </body>
+</html>`;
+      }
+
+      function renderPreview() {
+        const html = renderPreviewHTML({ interactive: true });
+        previewFrame.srcdoc = html;
+        console.log('[WebsiteBuilder] Preview rendered', {
+          theme: state.theme,
+          view: state.view,
+          sections: state.sections,
+          selectedSection: state.selectedSection
+        });
+      }
+
+      function openPreviewWindow() {
+        const html = renderPreviewHTML();
+        const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank', 'noopener,noreferrer');
+        window.setTimeout(() => {
+          URL.revokeObjectURL(url);
+        }, 60000);
+        setStatus('Preview opened in a new tab.');
+        console.log('[WebsiteBuilder] Preview opened in new tab');
+      }
+
+      function renderAll() {
+        renderThemeOptions();
+        renderPresetOptions();
+        renderViewSwitch();
+        renderSectionList();
+        renderQuickEdit();
+        renderInspector();
+        renderPreview();
+      }
+
+      themeOptions.addEventListener('click', (event) => {
+        const target = event.target.closest('[data-theme]');
+        if (!target) return;
+        state.theme = target.dataset.theme;
+        saveState('Theme updated.');
+        renderAll();
+      });
+
+      presetOptions.addEventListener('click', (event) => {
+        const target = event.target.closest('[data-preset]');
+        if (!target) return;
+        applyPreset(target.dataset.preset);
+      });
+
+      viewSwitch.addEventListener('click', (event) => {
+        const target = event.target.closest('[data-view]');
+        if (!target) return;
+        state.view = target.dataset.view;
+        saveState('Preview size updated.');
+        renderViewSwitch();
+        renderPreview();
+      });
+
+      sectionList.addEventListener('click', (event) => {
+        const selectTarget = event.target.closest('[data-select-section]');
+        if (selectTarget) {
+          selectSection(selectTarget.dataset.selectSection, { renderPreview: true });
+          return;
+        }
+
+        const toggleTarget = event.target.closest('[data-toggle-section]');
+        if (toggleTarget) {
+          toggleSection(toggleTarget.dataset.toggleSection);
+          return;
+        }
+
+        const moveTarget = event.target.closest('[data-move-section]');
+        if (moveTarget) {
+          const [direction, id] = moveTarget.dataset.moveSection.split(':');
+          moveSection(id, direction);
+        }
+      });
+
+      sectionList.addEventListener('change', (event) => {
+        const target = event.target.closest('[data-style-section]');
+        if (!target) return;
+        state.sections = state.sections.map((section) => section.id === target.dataset.styleSection ? { ...section, style: target.value } : section);
+        saveState('Section style updated.');
+        renderPreview();
+      });
+
+      quickEdit.addEventListener('click', (event) => {
+        const jumpTarget = event.target.closest('[data-jump-section]');
+        if (!jumpTarget) return;
+        selectSection(jumpTarget.dataset.jumpSection, { renderPreview: true });
+      });
+
+      quickEdit.addEventListener('input', (event) => {
+        const target = event.target.closest('[data-path]');
+        if (!target) return;
+        setByPath(state, target.dataset.path, target.value);
+        saveState(target.dataset.saveMessage || 'Draft updated.');
+        renderInspector();
+        renderPreview();
+      });
+
+      inspector.addEventListener('input', (event) => {
+        const target = event.target.closest('[data-path]');
+        if (!target) return;
+        setByPath(state, target.dataset.path, target.value);
+        saveState(target.dataset.saveMessage || 'Draft updated.');
+        renderQuickEdit();
+        renderPreview();
+      });
+
+      inspector.addEventListener('click', (event) => {
+        const addTarget = event.target.closest('[data-add-item]');
+        if (addTarget) {
+          addItem(addTarget.dataset.addItem);
+          return;
+        }
+
+        const removeTarget = event.target.closest('[data-remove-item]');
+        if (removeTarget) {
+          const [sectionId, index] = removeTarget.dataset.removeItem.split(':');
+          removeItem(sectionId, Number(index));
+        }
+      });
+
+      window.addEventListener('message', (event) => {
+        const data = event.data;
+        if (!data || data.source !== 'website-builder-preview') return;
+        if (data.type === 'select-section') {
+          selectSection(data.sectionId, { renderPreview: true });
+        }
+      });
+
+      document.getElementById('open-preview').addEventListener('click', openPreviewWindow);
+      document.getElementById('open-preview-secondary').addEventListener('click', openPreviewWindow);
+
+      document.getElementById('download-html').addEventListener('click', () => {
+        const html = renderPreviewHTML();
+        const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'myrecordsmyhealth-landing.html';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        setStatus('HTML file downloaded.');
+        console.log('[WebsiteBuilder] HTML downloaded');
+      });
+
+      document.getElementById('copy-config').addEventListener('click', async () => {
+        const serialized = JSON.stringify(state, null, 2);
+        try {
+          if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(serialized);
+          } else {
+            const textarea = document.createElement('textarea');
+            textarea.value = serialized;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            textarea.remove();
+          }
+          setStatus('Builder config copied.');
+          console.log('[WebsiteBuilder] Config copied');
+        } catch (error) {
+          console.error('[WebsiteBuilder] Failed to copy config:', error);
+          setStatus('Could not copy config from this browser.');
+        }
+      });
+
+      document.getElementById('reset-draft').addEventListener('click', () => {
+        state = deepClone(defaultState);
+        saveState('Draft reset to default.');
+        renderAll();
+      });
+
+      renderAll();
+      setStatus('Draft loaded and ready.');
+    </script>
+  </body>
+</html>

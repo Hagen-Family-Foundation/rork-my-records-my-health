@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MyRecordsMyHealth App Store Screenshot Priority Guide</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #122033;
+      --muted: #526174;
+      --paper: #f4f8fb;
+      --card: #ffffff;
+      --line: #dbe6ef;
+      --primary: #1e3a5f;
+      --primary-2: #2a5080;
+      --emergency: #dc2626;
+      --green: #047857;
+      --gold: #9a6400;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, rgba(42, 80, 128, 0.16), transparent 32rem), var(--paper);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 40px 20px 72px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: #fff;
+      border-radius: 28px;
+      padding: 34px;
+      box-shadow: 0 24px 70px rgba(18, 32, 51, 0.18);
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 12px;
+      font-weight: 800;
+      opacity: 0.78;
+      margin: 0 0 10px;
+    }
+
+    h1 {
+      font-size: clamp(32px, 5vw, 54px);
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+      margin: 0;
+      max-width: 760px;
+    }
+
+    .hero p {
+      max-width: 780px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 18px;
+      margin: 18px 0 0;
+    }
+
+    .note {
+      margin-top: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 18px;
+      padding: 16px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .section-title {
+      margin: 34px 0 14px;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+    }
+
+    .shot {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: 0 12px 34px rgba(18, 32, 51, 0.07);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shot::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 5px;
+      background: var(--accent, var(--primary));
+    }
+
+    .rank {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--accent, var(--primary)) 14%, white);
+      color: var(--accent, var(--primary));
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .shot h3 {
+      margin: 0 0 8px;
+      font-size: 19px;
+      letter-spacing: -0.02em;
+    }
+
+    .shot a {
+      color: var(--primary);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 4px;
+      font-weight: 800;
+    }
+
+    .shot p {
+      color: var(--muted);
+      margin: 8px 0;
+    }
+
+    .tag {
+      display: inline-flex;
+      border-radius: 999px;
+      background: #eef4fa;
+      color: var(--primary);
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      margin: 8px 6px 0 0;
+    }
+
+    .emergency {
+      --accent: var(--emergency);
+    }
+
+    .green {
+      --accent: var(--green);
+    }
+
+    .gold {
+      --accent: var(--gold);
+    }
+
+    .blue {
+      --accent: var(--primary-2);
+    }
+
+    .route-box {
+      margin-top: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .route-box a,
+    .route-box span {
+      display: block;
+      border-radius: 12px;
+      background: #f7fafc;
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .route-box a:hover {
+      border-color: var(--primary-2);
+      background: #eef4fa;
+    }
+
+    .checklist {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 12px 34px rgba(18, 32, 51, 0.07);
+    }
+
+    .checklist ol {
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    .checklist li {
+      margin: 10px 0;
+      color: var(--muted);
+    }
+
+    code {
+      background: #eef4fa;
+      color: var(--primary);
+      border-radius: 7px;
+      padding: 2px 6px;
+      font-weight: 700;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      main {
+        padding: 20px;
+      }
+
+      .hero,
+      .shot,
+      .checklist {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">MyRecordsMyHealth</p>
+      <h1>Prioritized App Store screenshot plan</h1>
+      <p>Use these screenshots in this order. The first five tell the strongest story: emergency readiness, organized medical records, controlled sharing, wallet-card backup, and secure access.</p>
+      <div class="note">Direct links below are app routes. In the web preview they open the right screen when the app is running. On a phone, use the tab or menu instructions if a route link does not open directly.</div>
+    </section>
+
+    <h2 class="section-title">Highest-priority screenshot set</h2>
+    <section class="grid">
+      <article class="shot emergency">
+        <div class="rank">1</div>
+        <h3><a href="/emergency">Emergency View: lifesaving info first</a></h3>
+        <p><strong>Why this should be first:</strong> This is the core App Store promise. It shows blood type, critical allergies, medications, conditions, emergency contacts, documents, and notes in a first-responder-friendly layout.</p>
+        <p><strong>Suggested App Store headline:</strong> Vital records, instantly ready.</p>
+        <p><strong>Capture notes:</strong> Use the demo record with Jordan Reyes. Capture the top of Emergency View so the red emergency header, patient name, blood type, and critical allergies are visible.</p>
+        <span class="tag">Must include</span><span class="tag">Hero shot</span><span class="tag">Emergency</span>
+        <div class="route-box">
+          <a href="/emergency">Open route: /emergency</a>
+          <a href="myrecordsmyhealth:///emergency">Open deep link: myrecordsmyhealth:///emergency</a>
+          <span>Manual path: bottom tab bar → Emergency</span>
+        </div>
+      </article>
+
+      <article class="shot blue">
+        <div class="rank">2</div>
+        <h3><a href="/">Records Dashboard: everything organized</a></h3>
+        <p><strong>Why it matters:</strong> This explains what the app actually stores: personal details, emergency contacts, allergies, medications, conditions, procedures, documents, insurance, and notes.</p>
+        <p><strong>Suggested App Store headline:</strong> Your health record, organized.</p>
+        <p><strong>Capture notes:</strong> Show the encrypted hero card, progress ring, privacy banner, and the first few collapsed record categories.</p>
+        <span class="tag">Must include</span><span class="tag">Records</span><span class="tag">Trust</span>
+        <div class="route-box">
+          <a href="/">Open route: /</a>
+          <a href="myrecordsmyhealth:///">Open deep link: myrecordsmyhealth:///</a>
+          <span>Manual path: bottom tab bar → Records</span>
+        </div>
+      </article>
+
+      <article class="shot green">
+        <div class="rank">3</div>
+        <h3><a href="/share">Share Screen: user-approved exports</a></h3>
+        <p><strong>Why it matters:</strong> App reviewers and customers need to see that sharing is controlled by the user, not automatic. This screen also highlights full record, emergency-only, and healthcare-standard export options.</p>
+        <p><strong>Suggested App Store headline:</strong> Share only what matters.</p>
+        <p><strong>Capture notes:</strong> Capture the privacy card plus export-type controls. If possible, scroll slightly to include sharing templates like Complete record, Specialist visit, Emergency summary, and Paperwork only.</p>
+        <span class="tag">Must include</span><span class="tag">Privacy</span><span class="tag">Sharing</span>
+        <div class="route-box">
+          <a href="/share">Open route: /share</a>
+          <a href="myrecordsmyhealth:///share">Open deep link: myrecordsmyhealth:///share</a>
+          <span>Manual path: bottom tab bar → Share</span>
+        </div>
+      </article>
+
+      <article class="shot emergency">
+        <div class="rank">4</div>
+        <h3><a href="/wallet-card">Wallet Card: screenshot-friendly backup</a></h3>
+        <p><strong>Why it matters:</strong> This is one of the app’s most practical differentiators. It shows that users can keep an emergency summary in Photos, print it, or carry it as a backup.</p>
+        <p><strong>Suggested App Store headline:</strong> A backup for emergencies.</p>
+        <p><strong>Capture notes:</strong> Frame the emergency medical info card itself, especially blood type, critical allergies, medications, emergency contact, and the MyRecordsMyHealth branding.</p>
+        <span class="tag">Must include</span><span class="tag">Wallet card</span><span class="tag">Backup</span>
+        <div class="route-box">
+          <a href="/wallet-card">Open route: /wallet-card</a>
+          <a href="myrecordsmyhealth:///wallet-card">Open deep link: myrecordsmyhealth:///wallet-card</a>
+          <span>Manual path: Settings → Emergency wallet card</span>
+        </div>
+      </article>
+
+      <article class="shot green">
+        <div class="rank">5</div>
+        <h3><a href="/security-settings">Security Settings: PIN, Face ID, auto-lock</a></h3>
+        <p><strong>Why it matters:</strong> Health information is sensitive. This screenshot answers the privacy concern immediately by showing biometric unlock, auto-lock, emergency text settings, and screenshot advisory.</p>
+        <p><strong>Suggested App Store headline:</strong> Private by design.</p>
+        <p><strong>Capture notes:</strong> Capture the header card plus biometric unlock and auto-lock sections. If using an iPhone with Face ID, this is especially strong.</p>
+        <span class="tag">Must include</span><span class="tag">Security</span><span class="tag">Face ID</span>
+        <div class="route-box">
+          <a href="/security-settings">Open route: /security-settings</a>
+          <a href="myrecordsmyhealth:///security-settings">Open deep link: myrecordsmyhealth:///security-settings</a>
+          <span>Manual path: Settings → Security</span>
+        </div>
+      </article>
+    </section>
+
+    <h2 class="section-title">Use these if you want 6–8 screenshots</h2>
+    <section class="grid">
+      <article class="shot blue">
+        <div class="rank">6</div>
+        <h3><a href="/language-settings">Language Settings: multilingual support</a></h3>
+        <p><strong>Why it matters:</strong> This feature helps seniors, caregivers, people with disabilities, families, and patients who communicate best in a language other than English.</p>
+        <p><strong>Suggested App Store headline:</strong> Care in your language.</p>
+        <p><strong>Capture notes:</strong> Show the active language summary, session language controls, and the language list.</p>
+        <span class="tag">Recommended</span><span class="tag">Accessibility</span><span class="tag">Language</span>
+        <div class="route-box">
+          <a href="/language-settings">Open route: /language-settings</a>
+          <a href="myrecordsmyhealth:///language-settings">Open deep link: myrecordsmyhealth:///language-settings</a>
+          <span>Manual path: Settings → Language</span>
+        </div>
+      </article>
+
+      <article class="shot gold">
+        <div class="rank">7</div>
+        <h3><a href="/edit-documents">Critical Documents: save important medical photos</a></h3>
+        <p><strong>Why it matters:</strong> It shows users can photograph DNR orders, organ donor cards, prescriptions, insurance cards, lab results, and other critical documents for emergency access.</p>
+        <p><strong>Suggested App Store headline:</strong> Keep documents close.</p>
+        <p><strong>Capture notes:</strong> Show the blue info card and existing document entries. Do not use private real documents in the screenshot.</p>
+        <span class="tag">Recommended</span><span class="tag">Documents</span><span class="tag">Camera</span>
+        <div class="route-box">
+          <a href="/edit-documents">Open route: /edit-documents</a>
+          <a href="myrecordsmyhealth:///edit-documents">Open deep link: myrecordsmyhealth:///edit-documents</a>
+          <span>Manual path: Records → Critical Documents → Edit</span>
+        </div>
+      </article>
+
+      <article class="shot blue">
+        <div class="rank">8</div>
+        <h3><a href="/search">Search: find records fast</a></h3>
+        <p><strong>Why it matters:</strong> Search communicates speed. It is useful for doctors, caregivers, and family members trying to find a medication, allergy, insurance detail, or note quickly.</p>
+        <p><strong>Suggested App Store headline:</strong> Find details fast.</p>
+        <p><strong>Capture notes:</strong> Type <code>shellfish</code>, <code>lisinopril</code>, or <code>asthma</code> into the search field before capturing so real results are visible.</p>
+        <span class="tag">Optional</span><span class="tag">Fast access</span><span class="tag">Search</span>
+        <div class="route-box">
+          <a href="/search">Open route: /search</a>
+          <a href="myrecordsmyhealth:///search">Open deep link: myrecordsmyhealth:///search</a>
+          <span>Manual path: Settings → Search all records</span>
+        </div>
+      </article>
+    </section>
+
+    <h2 class="section-title">Lower priority, but useful for special cases</h2>
+    <section class="grid">
+      <article class="shot green">
+        <div class="rank">9</div>
+        <h3><a href="/onboarding">Onboarding: easy first setup</a></h3>
+        <p><strong>Why it matters:</strong> Good if you want to show that the app is approachable for first-time users. It is less important than showing the real emergency and record screens.</p>
+        <p><strong>Suggested App Store headline:</strong> Setup takes minutes.</p>
+        <p><strong>Capture notes:</strong> Use the welcome screen or quick setup screen. Avoid replacing higher-priority emergency, records, sharing, wallet, or security screenshots with onboarding.</p>
+        <span class="tag">Optional</span><span class="tag">Setup</span>
+        <div class="route-box">
+          <a href="/onboarding">Open route: /onboarding</a>
+          <a href="myrecordsmyhealth:///onboarding">Open deep link: myrecordsmyhealth:///onboarding</a>
+          <span>Manual path: new user state before setup is complete</span>
+        </div>
+      </article>
+
+      <article class="shot gold">
+        <div class="rank">10</div>
+        <h3><a href="/settings">Settings: privacy, support, accessibility</a></h3>
+        <p><strong>Why it matters:</strong> Useful if you need one screenshot showing support contact, privacy policy access, accessibility, language, wallet card, and security options together.</p>
+        <p><strong>Suggested App Store headline:</strong> Built for trust.</p>
+        <p><strong>Capture notes:</strong> The first Settings viewport shows account, communications, and quick actions. Scroll to privacy/encryption if you want the strongest trust-focused version.</p>
+        <span class="tag">Optional</span><span class="tag">Trust</span><span class="tag">Support</span>
+        <div class="route-box">
+          <a href="/settings">Open route: /settings</a>
+          <a href="myrecordsmyhealth:///settings">Open deep link: myrecordsmyhealth:///settings</a>
+          <span>Manual path: bottom tab bar → Settings</span>
+        </div>
+      </article>
+    </section>
+
+    <h2 class="section-title">Recommended final App Store order</h2>
+    <section class="checklist">
+      <ol>
+        <li><strong>Emergency View</strong> — strongest opening shot because it sells the life-saving purpose immediately.</li>
+        <li><strong>Records Dashboard</strong> — proves the app organizes the user’s medical profile in one place.</li>
+        <li><strong>Share Screen</strong> — shows controlled exports and privacy-first sharing.</li>
+        <li><strong>Wallet Card</strong> — highlights the screenshot/print backup feature.</li>
+        <li><strong>Security Settings</strong> — addresses PIN, Face ID, biometric unlock, and privacy concerns.</li>
+        <li><strong>Language Settings</strong> — include if you want a sixth screenshot focused on accessibility and multilingual support.</li>
+        <li><strong>Critical Documents</strong> — include if you want to show photo storage for medical documents.</li>
+        <li><strong>Search</strong> — include if you want to show speed and convenience.</li>
+      </ol>
+    </section>
+
+    <h2 class="section-title">Suggested file names after capture</h2>
+    <section class="checklist">
+      <ol>
+        <li><code>01-emergency-view.png</code></li>
+        <li><code>02-records-dashboard.png</code></li>
+        <li><code>03-controlled-sharing.png</code></li>
+        <li><code>04-emergency-wallet-card.png</code></li>
+        <li><code>05-security-pin-face-id.png</code></li>
+        <li><code>06-language-support.png</code></li>
+        <li><code>07-critical-documents.png</code></li>
+        <li><code>08-search-records.png</code></li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>
